@@ -6,7 +6,6 @@ export const Navbar = async () => {
   const session = await auth();
   const user = session?.user;
   const isLoggedIn = session !== null && user !== undefined;
-  console.log("user", user);
 
   return (
     <header className="px-5 py-3 bg-white shadow-sm font-work-sans">
