@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <>
-      <h1 className="heading">Home</h1>
-    </>
+    <section className="">
+      <h1 className="heading mx-auto">Home</h1>
+    </section>
   );
 }
