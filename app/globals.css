@@ -2,14 +2,37 @@
 
 :root {
   --background: #ffffff;
+  --radius: 0.5rem;
 }
 
+@theme {
+  --font-work-sans: var(--font-work-sans);
 
-@media (prefers-color-scheme: dark) {
-  :root {
+  --color-primary: #EE2B69;
+  --color-primary-100: #FFE8F0;
+  --color-secondary: #FBE843;
+
+  --color-black: #000000;
+  --color-black-100: #333333;
+  --color-black-200: #141413;
+  --color-black-300: #7D8087;
+
+  --color-white: #FFFFFF;
+  --color-white-100: #F7F7F7;
+
+  --breakpoint-xs: 475px;
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --shadow-100: 2px 2px 0px 0px rgb(0, 0, 0);
+  --shadow-200: 2px 2px 0px 2px rgb(0, 0, 0);
+  --shadow-300: 2px 2px 0px 2px rgb(238, 43, 105);
+}
+
+@layer utilities {
+  .heading {
+    @apply uppercase bg-black px-6 py-3 font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl my-5 font-work-sans;
   }
-}
-
-body {
-  font-family: var(--font-work-sans);
 }
