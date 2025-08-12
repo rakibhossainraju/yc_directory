@@ -48,16 +48,6 @@
 
   .pink_container {
     @apply w-full bg-primary min-h-[530px] flex justify-center items-center flex-col py-10 px-6;
-    background-image: linear-gradient(
-      to right,
-      transparent 49.5%,
-      rgba(251, 232, 67, 0.2) 49.5%,
-      rgba(251, 232, 67, 0.6) 50.5%,
-      transparent 50.5%
-    );
-    background-size: 5% 100%;
-    background-position: center;
-    background-repeat: repeat-x;
   }
 
   .tag {
@@ -210,6 +200,19 @@
 
 .w-md-editor-toolbar {
   padding: 10px !important;
+}
+
+.pattern {
+  background-image: linear-gradient(
+    to right,
+    transparent 49.5%,
+    rgba(251, 232, 67, 0.2) 49.5%,
+    rgba(251, 232, 67, 0.6) 50.5%,
+    transparent 50.5%
+  );
+  background-size: 5% 100%;
+  background-position: center;
+  background-repeat: repeat-x;
 }
 
 @theme inline {
