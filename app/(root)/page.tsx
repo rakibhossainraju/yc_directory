@@ -1,10 +1,12 @@
 import SearchForm from "@/components/SearchForm";
 import StartupCard from "@/components/StartupCard";
+import { client } from "@/sanity/lib/client";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 
 export interface PostType {
   _createdAt: string;
   views: number;
-  author: { _id: number; name: string };
+  author: { _id: number; name: string; image: string; bio: string };
   title: string;
   description: string;
   image: string;
@@ -18,19 +20,7 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query ?? "";
-  const posts: PostType[] = [
-    {
-      _id: 1,
-      _createdAt: "2023-10-01T12:00:00Z",
-      views: 150,
-      author: { _id: 1, name: "Alice Johnson" },
-      title: "Pikachu",
-      description: "Exploring the future of AI in business.",
-      image:
-        "https://wallpapers.com/images/featured-full/detective-pikachu-9z3yp3akua2dnmeh.jpg",
-      category: "Technology",
-    },
-  ];
+  const posts: PostType[] = await client.fetch(STARTUPS_QUERY);
 
   return (
     <>
