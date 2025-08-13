@@ -2,17 +2,9 @@ import SearchForm from "@/components/SearchForm";
 import StartupCard from "@/components/StartupCard";
 import { client } from "@/sanity/lib/client";
 import { STARTUPS_QUERY } from "@/sanity/lib/queries";
+import { Startup, Author } from "@/sanity/types";
 
-export interface PostType {
-  _createdAt: string;
-  views: number;
-  author: { _id: number; name: string; image: string; bio: string };
-  title: string;
-  description: string;
-  image: string;
-  category: string;
-  _id: number;
-}
+export type StartupTypeCard = Omit<Startup, "author"> & { author?: Author };
 
 export default async function Home({
   searchParams,
@@ -20,7 +12,7 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query ?? "";
-  const posts: PostType[] = await client.fetch(STARTUPS_QUERY);
+  const posts: StartupTypeCard[] = await client.fetch(STARTUPS_QUERY);
 
   return (
     <>
