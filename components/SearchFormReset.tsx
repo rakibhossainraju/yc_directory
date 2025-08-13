@@ -1,24 +1,24 @@
 "use client";
 import { X } from "lucide-react";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const SearchFormReset = () => {
   const reset = () => {
-    const form = document.querySelector<HTMLFormElement>("form");
+    const form = document.querySelector<HTMLFormElement>("form.search-form");
     const searchInput = form?.querySelector<HTMLInputElement>(
       "input[name='query']",
     );
+    console.log(form, searchInput);
     if (form && searchInput) {
       form.reset();
       searchInput.value = "";
       searchInput.defaultValue = "";
+      redirect("/");
     }
   };
   return (
-    <button onClick={reset} className="search-btn" type="reset">
-      <Link href="/">
-        <X className="text-white" />
-      </Link>
+    <button onClick={reset} className="search-btn cursor-pointer" type="reset">
+      <X className="text-white" />
     </button>
   );
 };
