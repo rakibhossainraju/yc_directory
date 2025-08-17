@@ -6,6 +6,17 @@ export const STARTUPS_QUERY =
   _createdAt,views,
   category, image,
   author -> {
-    _id, name, image, bio
+    _id, name, image
   },
 }`);
+
+export const STARTUP_DETAIL_QUERY = defineQuery(
+  `*[_type == 'startup' && _id == $id][0] {
+    _id, title, slug,
+    _createdAt, views, pitch,
+    category, image, description,
+    author -> {
+      _id, name, image, username
+    },
+  }`,
+);
