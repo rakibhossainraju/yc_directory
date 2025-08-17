@@ -3,9 +3,15 @@ import { STARTUP_DETAIL_QUERY } from "@/sanity/lib/queries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
+import markdownIt from "markdown-it";
 import formateDate from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
+import View from "@/components/View";
 
 export const experimental_ppr = true;
+
+const md = markdownIt();
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -17,6 +23,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   ).data;
 
   if (!startup) return notFound();
+
+  const parsedContent = md.render(startup.pitch ?? "");
 
   return (
     <>
@@ -60,8 +68,21 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </Link>
           </div>
           <h3 className="text-30-bold">Pitch Details</h3>
+          {parsedContent ? (
+            <article
+              className="prose max-w-4xl font-work-sans break-all"
+              dangerouslySetInnerHTML={{ __html: parsedContent }}
+            />
+          ) : (
+            <p className="no-result">No details provided</p>
+          )}
         </div>
+        <hr className="divider" />
+        {/* TODO: EDITOR SELECTED STARTUPS*/}
       </section>
+      <Suspense fallback={<Skeleton className="view_skeleton" />}>
+        <View id={id} />
+      </Suspense>
     </>
   );
 };
