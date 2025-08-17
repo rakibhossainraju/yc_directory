@@ -20,3 +20,7 @@ export const STARTUP_DETAIL_QUERY = defineQuery(
     },
   }`,
 );
+
+export const STARTUP_VIEWS_QUERY = defineQuery(
+  `*[_type == 'startup' && _id == $id][0].views`,
+);
