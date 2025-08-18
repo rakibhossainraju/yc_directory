@@ -12,7 +12,7 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query ?? "";
-  const posts = (
+  const startups = (
     await sanityFetch({
       query: STARTUPS_QUERY,
       params: { search: query || null },
@@ -36,8 +36,11 @@ export default async function Home({
           {query ? `Search results fro "${query}"` : "Recent Pitches"}
         </p>
         <ul className="mt-7 card_grid">
-          {posts.map((post, index) => (
-            <StartupCard key={(post._id + index).toString()} post={post} />
+          {startups.map((startup, index) => (
+            <StartupCard
+              key={(startup._id + index).toString()}
+              startup={startup}
+            />
           ))}
         </ul>
         <SanityLive />

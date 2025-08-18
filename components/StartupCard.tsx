@@ -5,51 +5,53 @@ import { StartupTypeCard } from "@/app/(root)/page";
 import formateDate from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-const StartupCard = ({ post }: { post: StartupTypeCard }) => {
+const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
   return (
-    <li key={post._id} className="startup-card group">
+    <li key={startup._id} className="startup-card group">
       <div className="flex-between">
-        <p className="startup_card_date">{formateDate(post._createdAt)}</p>
+        <p className="startup_card_date">{formateDate(startup._createdAt)}</p>
         <div className="flex gap-1 5">
           <EyeIcon className="size-6 text-primary" />
-          <span className="text-16-medium">{post.views}</span>
+          <span className="text-16-medium">{startup.views}</span>
         </div>
       </div>
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
-          <Link href={`/user/${post?.author?._id}`}>
-            <p className="text-16-medium line-clap-1">{post?.author?.name}</p>
+          <Link href={`/user/${startup?.author?._id}`}>
+            <p className="text-16-medium line-clap-1">
+              {startup?.author?.name}
+            </p>
           </Link>
-          <Link href={`/startup/${post._id}`}>
-            <h3 className="text-26-semibold line clamp-1">{post.title}</h3>
+          <Link href={`/startup/${startup._id}`}>
+            <h3 className="text-26-semibold line clamp-1">{startup.title}</h3>
           </Link>
         </div>
-        <Link href={`/user/${post?.author?._id}`}>
+        <Link href={`/user/${startup?.author?._id}`}>
           <Image
-            src={post?.author?.image ?? ""}
+            src={startup?.author?.image ?? ""}
             width={48}
             height={48}
             className="rounded-full aspect-square"
-            alt={post?.author?.name ?? "alt"}
+            alt={startup?.author?.name ?? "alt"}
           />
         </Link>
       </div>
-      <Link href={`/startup/${post._id}`}>
-        <p className="startup-card_desc">{post.description}</p>
+      <Link href={`/startup/${startup._id}`}>
+        <p className="startup-card_desc">{startup.description}</p>
         <Image
-          src={post?.image ?? ""}
+          src={startup?.image ?? ""}
           width={1000}
           height={500}
           className="startup-card_img"
-          alt={post?.title ?? ""}
+          alt={startup?.title ?? ""}
         />
       </Link>
       <div className="flex-between gap-3 m-3">
-        <Link href={`/?query=${post?.category?.toLowerCase()}`}>
-          <p className="text-16-medium">{post.category}</p>
+        <Link href={`/?query=${startup?.category?.toLowerCase()}`}>
+          <p className="text-16-medium">{startup.category}</p>
         </Link>
         <Button className="startup-card_btn" asChild>
-          <Link href={`/startup/${post._id}`}>Details</Link>
+          <Link href={`/startup/${startup._id}`}>Details</Link>
         </Button>
       </div>
     </li>
