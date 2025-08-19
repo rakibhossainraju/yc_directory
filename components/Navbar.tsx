@@ -16,7 +16,7 @@ export const Navbar = async () => {
         <div className="flex items-center gap-5 text-black">
           {isLoggedIn ? (
             <>
-              <Link href="/app/startup/create">
+              <Link href="/startup/create">
                 <span>Create</span>
               </Link>
               <form
