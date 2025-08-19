@@ -1,5 +1,6 @@
 import { type ReactNode, Suspense } from "react";
 import { Navbar } from "@/components/Navbar";
+
 export const experimental_ppr = true;
 
 export default function Layout({
@@ -9,13 +10,7 @@ export default function Layout({
 }>) {
   return (
     <main>
-      <Suspense
-        fallback={
-          <nav>
-            <h1>Loading</h1>
-          </nav>
-        }
-      >
+      <Suspense>
         <Navbar />
       </Suspense>
       {children}
