@@ -8,7 +8,6 @@ const SearchFormReset = () => {
     const searchInput = form?.querySelector<HTMLInputElement>(
       "input[name='query']",
     );
-    console.log(form, searchInput);
     if (form && searchInput) {
       form.reset();
       searchInput.value = "";
