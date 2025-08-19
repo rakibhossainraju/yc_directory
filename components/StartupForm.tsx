@@ -10,6 +10,7 @@ import { formSchema } from "@/lib/validation";
 import { toast } from "sonner";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import { createStartup } from "@/lib/actions";
 
 const STARTUP_FIELDS = [
   {
@@ -48,6 +49,9 @@ interface InitialState {
   image: string;
   category: string;
 }
+export interface StartupData extends InitialState {
+  pitch: string;
+}
 
 const StartupForm = () => {
   const router = useRouter();
@@ -67,7 +71,7 @@ const StartupForm = () => {
   });
 
   async function submitForm(_: any, formData: FormData) {
-    const formValues = {
+    const formValues: StartupData = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       image: formData.get("image") as string,
@@ -75,19 +79,25 @@ const StartupForm = () => {
       pitch,
     };
     try {
-      await new Promise((resolve) => setTimeout(resolve, 20000));
       await formSchema.parseAsync(formValues);
-      // const res = await createIdea(previousState, formValues);
-      toast.success("Your Startup Pitch has been created successfully");
-      setErrors({});
-      router.push("/");
-      {
+      const { id } = await createStartup(formValues);
+      if (!id) {
+        toast.error("Something went wrong while creating your startup pitch");
         return {
           ...formValues,
-          status: "SUCCESS",
-          error: "",
+          error: "Something went wrong",
+          status: "ERROR",
         };
       }
+
+      toast.success("Your Startup Pitch has been created successfully");
+      setErrors({});
+      router.push(`/startup/${id}`);
+      return {
+        ...formValues,
+        status: "SUCCESS",
+        error: "",
+      };
     } catch (error) {
       if (error instanceof z.ZodError) {
         const { fieldErrors } = z.flattenError(error);
