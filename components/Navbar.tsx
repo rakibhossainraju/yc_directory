@@ -8,10 +8,16 @@ export const Navbar = async () => {
   const isLoggedIn = session !== null && user !== undefined;
 
   return (
-    <header className="px-5 py-3 bg-white shadow-sm font-work-sans">
+    <header className="px-5 py-3 bg-white shadow-sm font-work-sans min-h-[48px]">
       <nav className="flex justify-between items-center">
         <Link href="/">
-          <Image src="/logo.png" alt="Site Logo" width={100} height={100} />
+          <Image
+            src="/logo.png"
+            alt="Site Logo"
+            className="max-h-[21px]"
+            width={100}
+            height={100}
+          />
         </Link>
         <div className="flex items-center gap-5 text-black">
           {isLoggedIn ? (
