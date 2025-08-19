@@ -22,6 +22,7 @@
     "@sanity/types": "^4.4.1",
     "@sanity/vision": "^4.4.1",
     "@tailwindcss/typography": "^0.5.16",
+    "@uiw/react-md-editor": "^4.0.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "codemirror": "^6.0.1",
@@ -31,13 +32,16 @@
     "next": "^15.4.2-canary.51",
     "next-auth": "^5.0.0-beta.29",
     "next-sanity": "^10.0.10",
+    "next-themes": "^0.4.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-is": "19.1.0",
     "sanity": "^4.4.1",
     "sanity-plugin-markdown": "^6.0.0",
     "server-only": "^0.0.1",
-    "styled-components": "^6.1.19"
+    "sonner": "^2.0.7",
+    "styled-components": "^6.1.19",
+    "zod": "^4.0.17"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
