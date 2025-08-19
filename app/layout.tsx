@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import "easymde/dist/easymde.min.css";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -22,8 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={workSans.variable}>{children}</body>
+    <html data-color-mode="light" lang="en">
+      <body className={workSans.variable}>
+        {children}
+        <Toaster richColors />
+      </body>
     </html>
   );
 }
