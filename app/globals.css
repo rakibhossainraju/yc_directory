@@ -92,7 +92,7 @@
   }
 
   .profile_image {
-    @apply rounded-full object-cover border-[3px] border-black;
+    @apply rounded-full object-cover border-[3px] border-black h-[300px];
   }
 
   /* idea details */
@@ -101,7 +101,7 @@
   }
 
   .view_skeleton {
-    @apply bg-zinc-400 h-10 w-24 rounded-lg fixed bottom-3 right-3;
+    @apply bg-primary/30 h-10 w-24 rounded-lg fixed bottom-3 right-3;
   }
 
   /* navbar */
