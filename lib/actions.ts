@@ -2,14 +2,14 @@
 
 import "server-only";
 import { auth } from "@/auth";
-import { isSessionValid } from "@/lib/server-utils";
+import { isSessionInValid } from "@/lib/server-utils";
 import { StartupData } from "@/components/StartupForm";
 import { writeClient } from "@/sanity/lib/write-client";
 import slugify from "slugify";
 
 export async function createStartup(formValues: StartupData) {
   const session = await auth();
-  if (isSessionValid(session))
+  if (isSessionInValid(session))
     return { error: "Not signed in", status: "ERROR" };
 
   try {
