@@ -35,7 +35,7 @@ export const Navbar = async () => {
                   <span>Logout</span>
                 </button>
               </form>
-              <Link href={`/user/${user.id}`}>
+              <Link href={`/user`}>
                 <span>{user.name}</span>
               </Link>
             </>
