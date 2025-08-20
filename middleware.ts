@@ -1,10 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import { auth } from "@/auth";
-import { isSessionValid } from "@/lib/server-utils";
+import { isSessionInValid } from "@/lib/server-utils";
 
 export async function middleware(req: NextRequest) {
   const session = await auth();
-  if (isSessionValid(session)) {
+  if (isSessionInValid(session)) {
     const url = new URL("/", req.nextUrl.origin);
     return NextResponse.redirect(url);
   }
