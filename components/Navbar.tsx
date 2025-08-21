@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { auth, signIn, signOut } from "@/auth";
+import { LogOut, BadgePlus, LogIn } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Navbar = async () => {
   const session = await auth();
@@ -23,20 +25,31 @@ export const Navbar = async () => {
           {isLoggedIn ? (
             <>
               <Link href="/startup/create">
-                <span>Create</span>
+                <span className="max-sm:hidden ">Create</span>
+                <BadgePlus className="size-6 sm:hidden text-red-500" />
               </Link>
               <form
                 action={async () => {
                   "use server";
                   await signOut({ redirectTo: "/" });
                 }}
+                className="flex items-center"
               >
                 <button type="submit">
-                  <span>Logout</span>
+                  <span className="max-sm:hidden ">Logout</span>
+                  <LogOut className="size-6 sm:hidden text-red-500" />
                 </button>
               </form>
               <Link href={`/user`}>
-                <span>{user.name}</span>
+                <Avatar className="size-10">
+                  <AvatarImage
+                    src={session?.user?.image ?? ""}
+                    alt={session?.user?.name ?? ""}
+                  />
+                  <AvatarFallback>
+                    {session?.user?.name?.[0] ?? "AV"}
+                  </AvatarFallback>
+                </Avatar>
               </Link>
             </>
           ) : (
@@ -46,9 +59,11 @@ export const Navbar = async () => {
                   "use server";
                   await signIn("git");
                 }}
+                className="flex items-center"
               >
                 <button type="submit">
-                  <span>Login</span>
+                  <span className="max-sm:hidden ">Login</span>
+                  <LogIn className="size-6 sm:hidden text-red-500" />
                 </button>
               </form>
             </>
