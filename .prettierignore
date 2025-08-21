@@ -1,0 +1,19 @@
+# logs
+*.log
+
+# Misc
+.DS_Store
+.cache
+
+node_modules
+dist
+packages/*/node_modules
+.next
+.vercel
+.vscode
+.idea
+.env
+.env.local
+
+package-lock.json
+yarn.lock
