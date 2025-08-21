@@ -1,8 +1,8 @@
-import React from "react";
-import { Skeleton } from "@/components/ui/skeleton";
+import React from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const StartupCardSkeleton = () => {
-  return Array.from({ length: 4 }).map((_, index) => (
+const StartupCardSkeleton = ({ count = 4 }: { count?: number }) => {
+  return Array.from({ length: count }).map((_, index) => (
     <div
       key={`${index}-skeleton-card`}
       className="bg-white border-[5px] border-black py-6 px-5 rounded-[22px] shadow-200 !hover:bg-white"

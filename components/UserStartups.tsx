@@ -12,7 +12,10 @@ const UserStartups = async ({ userId }: { userId: string }) => {
   return (
     <>
       {startups.map((startup) => (
-        <StartupCard key={startup._id} startup={startup as StartupTypeCard} />
+        <StartupCard
+          key={startup._id}
+          startup={startup as StartupTypeCard}
+        />
       ))}
     </>
   );
