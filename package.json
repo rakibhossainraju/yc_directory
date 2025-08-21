@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate",
-    "deploy": "varcel build && vercel deploy --prebuilt"
+    "deploy": "vercel build && vercel deploy --prebuilt"
   },
   "dependencies": {
     "@babel/runtime": "^7.25.0",
