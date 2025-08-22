@@ -1,13 +1,13 @@
-import { sanityFetch } from "@/sanity/lib/live";
-import { STARTUP_DETAIL_QUERY } from "@/sanity/lib/queries";
-import { notFound } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import { Suspense } from "react";
-import markdownIt from "markdown-it";
-import formateDate from "@/lib/utils";
-import { Skeleton } from "@/components/ui/skeleton";
-import View from "@/components/View";
+import { sanityFetch } from '@/sanity/lib/live';
+import { STARTUP_DETAIL_QUERY } from '@/sanity/lib/queries';
+import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import { Suspense } from 'react';
+import markdownIt from 'markdown-it';
+import formateDate from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
+import View from '@/components/View';
+import { Link } from '@/lib/custom-router';
 
 export const experimental_ppr = true;
 
@@ -24,7 +24,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   if (!startup) return notFound();
 
-  const parsedContent = md.render(startup.pitch ?? "");
+  const parsedContent = md.render(startup.pitch ?? '');
 
   return (
     <>
@@ -43,28 +43,21 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         />
         <div className="space-y-5 mt-10 max-w-4xl mx-auto">
           <div className="flex-between gap-5">
-            <Link
-              href={`/user/${startup.author!._id}`}
-              className="flex gap-2 items-center mb-3"
-            >
+            <Link href={`/user/${startup.author!._id}`} className="flex gap-2 items-center mb-3">
               <Image
                 src={startup.author!.image!}
-                alt={startup.author!.name! + " Avatar"}
+                alt={startup.author!.name! + ' Avatar'}
                 width={64}
                 height={64}
                 className="rounded-full aspect-square  drop-shadow-lg"
               />
               <div>
                 <p className="text-20-medium">{startup.author!.name!}</p>
-                <p className="text-20-medium !text-black-300">
-                  @{startup.author!.username!}
-                </p>
+                <p className="text-20-medium !text-black-300">@{startup.author!.username!}</p>
               </div>
             </Link>
             <Link href={`/?query=${startup.category}`}>
-              <span className="category-tag cursor-pointer">
-                {startup.category}
-              </span>
+              <span className="category-tag cursor-pointer">{startup.category}</span>
             </Link>
           </div>
           <h3 className="text-30-bold">Pitch Details</h3>

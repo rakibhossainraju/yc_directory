@@ -1,8 +1,8 @@
-import Link from "next/link";
-import Image from "next/image";
-import { auth, signIn, signOut } from "@/auth";
-import { LogOut, BadgePlus, LogIn } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from 'next/image';
+import { auth, signIn, signOut } from '@/auth';
+import { LogOut, BadgePlus, LogIn } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Link } from '@router/customized';
 
 export const Navbar = async () => {
   const session = await auth();
@@ -30,8 +30,8 @@ export const Navbar = async () => {
               </Link>
               <form
                 action={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/" });
+                  'use server';
+                  await signOut({ redirectTo: '/' });
                 }}
                 className="flex items-center"
               >
@@ -42,13 +42,8 @@ export const Navbar = async () => {
               </form>
               <Link href={`/user`}>
                 <Avatar className="size-10">
-                  <AvatarImage
-                    src={session?.user?.image ?? ""}
-                    alt={session?.user?.name ?? ""}
-                  />
-                  <AvatarFallback>
-                    {session?.user?.name?.[0] ?? "AV"}
-                  </AvatarFallback>
+                  <AvatarImage src={session?.user?.image ?? ''} alt={session?.user?.name ?? ''} />
+                  <AvatarFallback>{session?.user?.name?.[0] ?? 'AV'}</AvatarFallback>
                 </Avatar>
               </Link>
             </>
@@ -56,8 +51,8 @@ export const Navbar = async () => {
             <>
               <form
                 action={async () => {
-                  "use server";
-                  await signIn("git");
+                  'use server';
+                  await signIn('git');
                 }}
                 className="flex items-center"
               >

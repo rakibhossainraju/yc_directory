@@ -1,9 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
-import { EyeIcon } from "lucide-react";
-import { StartupTypeCard } from "@/app/(root)/page";
-import formateDate from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import Image from 'next/image';
+import { EyeIcon } from 'lucide-react';
+import { StartupTypeCard } from '@/app/(root)/page';
+import formateDate from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Link } from '@/lib/custom-router';
 
 const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
   return (
@@ -18,9 +18,7 @@ const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
           <Link href={`/user/${startup?.author?._id}`}>
-            <p className="text-16-medium line-clap-1">
-              {startup?.author?.name}
-            </p>
+            <p className="text-16-medium line-clap-1">{startup?.author?.name}</p>
           </Link>
           <Link href={`/startup/${startup._id}`}>
             <h3 className="text-26-semibold line clamp-1">{startup.title}</h3>
@@ -28,22 +26,22 @@ const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
         </div>
         <Link href={`/user/${startup?.author?._id}`}>
           <Image
-            src={startup?.author?.image ?? ""}
+            src={startup?.author?.image ?? ''}
             width={48}
             height={48}
             className="rounded-full aspect-square"
-            alt={startup?.author?.name ?? "alt"}
+            alt={startup?.author?.name ?? 'alt'}
           />
         </Link>
       </div>
       <Link href={`/startup/${startup._id}`}>
         <p className="startup-card_desc">{startup.description}</p>
         <Image
-          src={startup?.image ?? ""}
+          src={startup?.image ?? ''}
           width={1000}
           height={500}
           className="startup-card_img"
-          alt={startup?.title ?? ""}
+          alt={startup?.title ?? ''}
         />
       </Link>
       <div className="flex-between gap-3 m-3">
