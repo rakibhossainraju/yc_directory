@@ -3,7 +3,7 @@ import { Navbar } from '@/components/Navbar';
 
 export const experimental_ppr = true;
 
-export default function RootLayout({
+export default function AppLayout({
   children,
 }: Readonly<{
   children: ReactNode;
