@@ -8,6 +8,7 @@ import formateDate from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import View from '@/components/View';
 import { Link } from '@/lib/custom-router';
+import EditorPicks from '@/components/EditorPicks';
 
 export const experimental_ppr = true;
 
@@ -71,7 +72,9 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           )}
         </div>
         <hr className="divider" />
-        {/* TODO: EDITOR SELECTED STARTUPS*/}
+        <Suspense fallback={null}>
+          <EditorPicks />
+        </Suspense>
       </section>
       <Suspense fallback={<Skeleton className="view_skeleton" />}>
         <View id={id} />
