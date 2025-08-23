@@ -21,7 +21,7 @@ const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
             <p className="text-16-medium line-clap-1">{startup?.author?.name}</p>
           </Link>
           <Link href={`/startup/${startup._id}`}>
-            <h3 className="text-26-semibold line clamp-1">{startup.title}</h3>
+            <h3 className="max-w-[280px] text-26-semibold line truncate">{startup.title}</h3>
           </Link>
         </div>
         <Link href={`/user/${startup?.author?._id}`}>
@@ -46,7 +46,7 @@ const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
       </Link>
       <div className="flex-between gap-3 m-3">
         <Link href={`/?query=${startup?.category?.toLowerCase()}`}>
-          <p className="text-16-medium">{startup.category}</p>
+          <p className="text-16-medium category-tag mb-0">{startup.category}</p>
         </Link>
         <Button className="startup-card_btn" asChild>
           <Link href={`/startup/${startup._id}`}>Details</Link>
