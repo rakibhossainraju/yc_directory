@@ -1,7 +1,6 @@
-import { addBasePath } from 'next/dist/client/add-base-path';
-
 function getURL(href: string): URL {
-  return new URL(addBasePath(href), location.href);
+  // Resolve relative and absolute URLs against current location without relying on Next internals
+  return new URL(href, location.href);
 }
 
 // https://github.com/vercel/next.js/blob/400ccf7b1c802c94127d8d8e0d5e9bdf9aab270c/packages/next/src/client/link.tsx#L169
