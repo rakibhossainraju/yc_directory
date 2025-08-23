@@ -1,29 +1,29 @@
-import { defineType, defineField } from "sanity";
+import { defineType, defineField } from 'sanity';
 
 export const playlist = defineType({
-  name: "playlist",
-  title: "Playlist",
-  icon: () => "🎵",
-  type: "document",
+  name: 'playlist',
+  title: 'Playlist',
+  icon: () => '🎵',
+  type: 'document',
   fields: [
     defineField({
-      name: "title",
-      type: "string",
+      name: 'title',
+      type: 'string',
     }),
     defineField({
-      name: "slug",
-      type: "slug",
+      name: 'slug',
+      type: 'slug',
       options: {
-        source: "title",
+        source: 'title',
       },
     }),
     defineField({
-      name: "select",
-      type: "array",
-      of: [{ type: "reference", to: { type: "startup" } }],
+      name: 'select',
+      type: 'array',
+      of: [{ type: 'reference', to: { type: 'startup' } }],
     }),
   ],
   preview: {
-    select: { title: "title" },
+    select: { title: 'title' },
   },
 });

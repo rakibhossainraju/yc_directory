@@ -1,7 +1,7 @@
-import "server-only";
-import { createClient } from "next-sanity";
+import 'server-only';
+import { createClient } from 'next-sanity';
 
-import { apiVersion, dataset, projectId, sanityWriteToken } from "../env";
+import { apiVersion, dataset, projectId, sanityWriteToken } from '../env';
 
 export const writeClient = createClient({
   projectId,

@@ -1,7 +1,7 @@
-import NextAuth from "next-auth";
-import GitHub from "@auth/core/providers/github";
-import { AUTHOR_BY_GITHUB_ID_QUERY } from "@/sanity/lib/queries";
-import { writeClient } from "@/sanity/lib/write-client";
+import NextAuth from 'next-auth';
+import GitHub from '@auth/core/providers/github';
+import { AUTHOR_BY_GITHUB_ID_QUERY } from '@/sanity/lib/queries';
+import { writeClient } from '@/sanity/lib/write-client';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [GitHub],
@@ -13,13 +13,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       });
       if (!existingUser) {
         await writeClient.create({
-          _type: "author",
+          _type: 'author',
           id,
           email,
           image,
           name,
           username: login,
-          bio: bio || "",
+          bio: bio || '',
         });
       }
       return true;

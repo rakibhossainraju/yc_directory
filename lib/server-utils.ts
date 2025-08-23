@@ -1,5 +1,5 @@
-import "server-only";
-import { Session } from "next-auth";
+import 'server-only';
+import { Session } from 'next-auth';
 
 export function isSessionInValid(session: Session | null): boolean {
   if (!session || !session.user || !session.expires) return true;

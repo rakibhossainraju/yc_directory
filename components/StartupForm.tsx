@@ -1,45 +1,45 @@
-"use client";
+'use client';
 
-import { useActionState, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import MDEditor from "@uiw/react-md-editor";
-import { Button } from "@/components/ui/button";
-import { Send, LoaderCircle } from "lucide-react";
-import { formSchema } from "@/lib/validation";
-import { toast } from "sonner";
-import { z } from "zod";
-import { useRouter } from "next/navigation";
-import { createStartup } from "@/lib/actions";
+import { useActionState, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import MDEditor from '@uiw/react-md-editor';
+import { Button } from '@/components/ui/button';
+import { Send, LoaderCircle } from 'lucide-react';
+import { formSchema } from '@/lib/validation';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import { useRouter } from 'next/navigation';
+import { createStartup } from '@/lib/actions';
 
 const STARTUP_FIELDS = [
   {
-    name: "title",
-    title: "Title",
-    message: "Title is required",
-    placeholder: "Startup Title",
+    name: 'title',
+    title: 'Title',
+    message: 'Title is required',
+    placeholder: 'Startup Title',
   },
   {
-    name: "category",
-    title: "Category",
-    message: "Category is required",
-    placeholder: "Startup Category",
+    name: 'category',
+    title: 'Category',
+    message: 'Category is required',
+    placeholder: 'Startup Category',
   },
   {
-    name: "image",
-    title: "Image URL",
-    message: "Image URL is required",
-    placeholder: "https://example.com/image.jpg",
+    name: 'image',
+    title: 'Image URL',
+    message: 'Image URL is required',
+    placeholder: 'https://example.com/image.jpg',
     attributes: {
-      type: "url",
+      type: 'url',
     },
   },
   {
-    name: "description",
-    title: "Description",
-    message: "Description is required",
-    element: "textarea",
-    placeholder: "Startup Description",
+    name: 'description',
+    title: 'Description',
+    message: 'Description is required',
+    element: 'textarea',
+    placeholder: 'Startup Description',
   },
 ];
 
@@ -55,66 +55,66 @@ export interface StartupData extends InitialState {
 
 const StartupForm = () => {
   const router = useRouter();
-  const [pitch, setPitch] = useState("");
+  const [pitch, setPitch] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const initialState: InitialState = {
-    title: "",
-    description: "",
-    category: "",
-    image: "",
+    title: '',
+    description: '',
+    category: '',
+    image: '',
   };
   const [state, formAction, isPending] = useActionState(submitForm, {
     ...initialState,
     pitch,
-    error: "",
-    status: "INITIAL",
+    error: '',
+    status: 'INITIAL',
   });
 
   async function submitForm(_: any, formData: FormData) {
     const formValues: StartupData = {
-      title: formData.get("title") as string,
-      description: formData.get("description") as string,
-      image: formData.get("image") as string,
-      category: formData.get("category") as string,
+      title: formData.get('title') as string,
+      description: formData.get('description') as string,
+      image: formData.get('image') as string,
+      category: formData.get('category') as string,
       pitch,
     };
     try {
       await formSchema.parseAsync(formValues);
       const { id } = await createStartup(formValues);
       if (!id) {
-        toast.error("Something went wrong while creating your startup pitch");
+        toast.error('Something went wrong while creating your startup pitch');
         return {
           ...formValues,
-          error: "Something went wrong",
-          status: "ERROR",
+          error: 'Something went wrong',
+          status: 'ERROR',
         };
       }
 
-      toast.success("Your Startup Pitch has been created successfully");
+      toast.success('Your Startup Pitch has been created successfully');
       setErrors({});
       router.push(`/startup/${id}`);
       return {
         ...formValues,
-        status: "SUCCESS",
-        error: "",
+        status: 'SUCCESS',
+        error: '',
       };
     } catch (error) {
       if (error instanceof z.ZodError) {
         const { fieldErrors } = z.flattenError(error);
         console.log(fieldErrors);
         setErrors(fieldErrors);
-        toast.error("Please fill all the fields");
+        toast.error('Please fill all the fields');
         return {
           ...formValues,
-          error: "Please fill all the fields",
-          status: "ERROR",
+          error: 'Please fill all the fields',
+          status: 'ERROR',
         };
       } else {
-        toast.error("Something went wrong");
+        toast.error('Something went wrong');
         return {
           ...formValues,
-          error: "Something went wrong",
-          status: "ERROR",
+          error: 'Something went wrong',
+          status: 'ERROR',
         };
       }
     }
@@ -122,31 +122,27 @@ const StartupForm = () => {
 
   return (
     <form className="startup-form" action={formAction}>
-      {STARTUP_FIELDS.map(
-        ({ name, title, element, attributes = {}, placeholder }) => {
-          const isInput = element === undefined;
-          const Element = isInput ? Input : Textarea;
-          return (
-            <div key={name}>
-              <label htmlFor={name} className="startup-form_label">
-                {title}
-              </label>
-              <Element
-                id={name}
-                name={name}
-                className={`startup-form_${isInput ? "input" : "textarea"}`}
-                placeholder={placeholder}
-                required={true}
-                defaultValue={(state as any)[name] || ""}
-                {...attributes}
-              />
-              {errors[name] && (
-                <p className="startup-form_error">{errors[name]}</p>
-              )}
-            </div>
-          );
-        },
-      )}
+      {STARTUP_FIELDS.map(({ name, title, element, attributes = {}, placeholder }) => {
+        const isInput = element === undefined;
+        const Element = isInput ? Input : Textarea;
+        return (
+          <div key={name}>
+            <label htmlFor={name} className="startup-form_label">
+              {title}
+            </label>
+            <Element
+              id={name}
+              name={name}
+              className={`startup-form_${isInput ? 'input' : 'textarea'}`}
+              placeholder={placeholder}
+              required={true}
+              defaultValue={(state as any)[name] || ''}
+              {...attributes}
+            />
+            {errors[name] && <p className="startup-form_error">{errors[name]}</p>}
+          </div>
+        );
+      })}
       <div>
         <label htmlFor="pitch" className="startup-form_label">
           Pitch
@@ -158,21 +154,16 @@ const StartupForm = () => {
           preview="edit"
           height={300}
           textareaProps={{
-            placeholder:
-              "Briefly describe your idea and what problem it solves.",
-            id: "pitch",
+            placeholder: 'Briefly describe your idea and what problem it solves.',
+            id: 'pitch',
           }}
           previewOptions={{
-            disallowedElements: ["script", "style", "iframe"],
+            disallowedElements: ['script', 'style', 'iframe'],
           }}
         />
         {errors.pitch && <p className="startup-form_error">{errors.pitch}</p>}
       </div>
-      <Button
-        disabled={isPending}
-        type="submit"
-        className="startup-form_btn text-white"
-      >
+      <Button disabled={isPending} type="submit" className="startup-form_btn text-white">
         {isPending ? (
           <>
             Submiting your pitch

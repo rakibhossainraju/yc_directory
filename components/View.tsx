@@ -1,9 +1,9 @@
-import React from "react";
-import Ping from "@/components/Ping";
-import { after } from "next/server";
-import { STARTUP_VIEWS_QUERY } from "@/sanity/lib/queries";
-import { client } from "@/sanity/lib/client";
-import { writeClient } from "@/sanity/lib/write-client";
+import React from 'react';
+import Ping from '@/components/Ping';
+import { after } from 'next/server';
+import { STARTUP_VIEWS_QUERY } from '@/sanity/lib/queries';
+import { client } from '@/sanity/lib/client';
+import { writeClient } from '@/sanity/lib/write-client';
 
 const View = async ({ id }: { id: string }) => {
   const totalViews =

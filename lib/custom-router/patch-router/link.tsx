@@ -17,13 +17,17 @@ export const Link = forwardRef<HTMLAnchorElement, Props>(function Link(
   // - string href that is app-relative (starts with '/') or relative (no scheme like http:, mailto:, tel:)
   // - UrlObject will be treated as internal (NextLink supports it)
   const isStringHref = typeof href === 'string';
-  const isRelativeNoScheme =
-    isStringHref && !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(href as string); // no URL scheme
-  const useLink = href != null && (!isStringHref || (href as string).startsWith('/') || isRelativeNoScheme);
+  const isRelativeNoScheme = isStringHref && !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(href as string); // no URL scheme
+  const useLink =
+    href != null && (!isStringHref || (href as string).startsWith('/') || isRelativeNoScheme);
 
   if (!useLink) {
     // External or non-internal: render plain anchor
-    const anchorProps: AnchorProps = { href: href as AnchorProps['href'], onClick, ...rest } as AnchorProps;
+    const anchorProps: AnchorProps = {
+      href: href as AnchorProps['href'],
+      onClick,
+      ...rest,
+    } as AnchorProps;
     return <a {...anchorProps} ref={ref} />;
   }
 
