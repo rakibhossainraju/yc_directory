@@ -1,28 +1,58 @@
-import Form from 'next/form';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from '@router/customized';
 import { Search, X } from 'lucide-react';
-import { Link } from '@router/customized';
 
 const SearchForm = ({ query }: { query: string }) => {
+  const [searchValue, setSearchValue] = useState(query);
+  const router = useRouter();
+
+  useEffect(() => {
+    setSearchValue(query);
+  }, [query]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!searchValue.trim()) {
+      setSearchValue('');
+    } else {
+      router.push(`/?query=${encodeURIComponent(searchValue)}`);
+    }
+  };
+
+  const handleClear = () => {
+    setSearchValue('');
+    router.push('/');
+  };
+
   return (
-    <Form className="search-form" action="/" scroll={false}>
+    <form className="search-form" onSubmit={handleSubmit}>
       <input
         name="query"
-        defaultValue={query}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
         placeholder="Search Startups"
         className="search-input"
         type="text"
       />
       <div className="flex gap-2">
-        {query && (
-          <Link href="/" className="search-btn cursor-pointer" aria-label="Clear search">
+        {searchValue && (
+          <button
+            type="button"
+            onClick={handleClear}
+            className="search-btn cursor-pointer"
+            aria-label="Clear search"
+          >
             <X className="text-white" />
-          </Link>
+          </button>
         )}
         <button type="submit" className="search-btn">
           <Search className="text-white" />
         </button>
       </div>
-    </Form>
+    </form>
   );
 };
 
