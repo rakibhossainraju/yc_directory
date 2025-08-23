@@ -1,6 +1,6 @@
-import Form from "next/form";
-import { Search } from "lucide-react";
-import SearchFormReset from "@/components/SearchFormReset";
+import Form from 'next/form';
+import { Search, X } from 'lucide-react';
+import { Link } from '@router/customized';
 
 const SearchForm = ({ query }: { query: string }) => {
   return (
@@ -13,7 +13,11 @@ const SearchForm = ({ query }: { query: string }) => {
         type="text"
       />
       <div className="flex gap-2">
-        {query && <SearchFormReset />}
+        {query && (
+          <Link href="/" className="search-btn cursor-pointer" aria-label="Clear search">
+            <X className="text-white" />
+          </Link>
+        )}
         <button type="submit" className="search-btn">
           <Search className="text-white" />
         </button>
