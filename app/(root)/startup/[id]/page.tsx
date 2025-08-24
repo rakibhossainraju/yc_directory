@@ -9,12 +9,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 import View from '@/components/View';
 import { Link } from '@/lib/custom-router';
 import EditorPicks from '@/components/EditorPicks';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export const experimental_ppr = true;
 
 const md = markdownIt();
 
-const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
+const StartupDetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const startup = (
     await sanityFetch({
@@ -36,22 +37,25 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       </section>
       <section className="section_container">
         <Image
-          className="w-full h-auto"
+          className="w-full h-auto max-w-[1200px] max-h-[700px] bg-primary-100 rounded-xl object-cover drop-shadow-lg mx-auto"
           src={startup.image!}
           alt={startup.title!}
-          width={1080}
-          height={1080}
+          width={1200}
+          height={600}
         />
         <div className="space-y-5 mt-10 max-w-4xl mx-auto">
           <div className="flex-between gap-5">
             <Link href={`/user/${startup.author!._id}`} className="flex gap-2 items-center mb-3">
-              <Image
-                src={startup.author!.image!}
-                alt={startup.author!.name! + ' Avatar'}
-                width={64}
-                height={64}
-                className="rounded-full aspect-square  drop-shadow-lg"
-              />
+              <Avatar className="size-16">
+                <AvatarImage
+                  src={startup.author!.image!}
+                  alt={startup.author!.name! + ' Avatar'}
+                  className="rounded-full aspect-square  drop-shadow-lg"
+                />
+                <AvatarFallback className="font-bold">
+                  {startup.author!.name?.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
               <div>
                 <p className="text-20-medium">{startup.author!.name!}</p>
                 <p className="text-20-medium !text-black-300">@{startup.author!.username!}</p>
@@ -82,4 +86,4 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     </>
   );
 };
-export default Page;
+export default StartupDetailsPage;
