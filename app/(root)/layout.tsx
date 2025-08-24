@@ -1,4 +1,4 @@
-import { type ReactNode, Suspense } from 'react';
+import { type ReactNode } from 'react';
 import { Navbar } from '@/components/Navbar';
 
 export const experimental_ppr = true;
@@ -9,11 +9,9 @@ export default function AppLayout({
   children: ReactNode;
 }>) {
   return (
-    <main>
-      <Suspense>
-        <Navbar />
-      </Suspense>
-      {children}
-    </main>
+    <>
+      <Navbar />
+      <main>{children}</main>
+    </>
   );
 }
