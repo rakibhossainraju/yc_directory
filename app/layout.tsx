@@ -5,6 +5,7 @@ import '../styles/globals.css';
 import '../styles/nprogress.css';
 import { Toaster } from '@/components/ui/sonner';
 import { HandleOnComplete } from '@/lib/custom-router';
+import ProgressBarController from '@/components/ProgressBarController';
 
 const workSans = Work_Sans({
   variable: '--font-work-sans',
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html data-color-mode="light" lang="en">
       <body className={workSans.variable}>
+        <ProgressBarController />
         <HandleOnComplete />
         {children}
         <Toaster richColors />
