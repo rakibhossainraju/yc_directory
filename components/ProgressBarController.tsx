@@ -8,14 +8,8 @@ export default function ProgressBarController() {
     const start = () => NProgress.start();
     const done = () => NProgress.done();
 
-    // Some browsers don’t always emit beforeunload (or it’s too late). This helps:
-    const onVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') start();
-      else done();
-    };
     // Hard navigations away from this page
     window.addEventListener('beforeunload', start);
-    document.addEventListener('visibilitychange', onVisibilityChange);
 
     //When this page finishes initial load
     if (document.readyState === 'complete') {
@@ -26,7 +20,6 @@ export default function ProgressBarController() {
 
     return () => {
       window.removeEventListener('beforeunload', start);
-      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('load', done);
     };
   }, []);
