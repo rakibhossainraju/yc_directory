@@ -44,9 +44,11 @@ const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
           alt={startup?.title ?? ''}
         />
       </Link>
-      <div className="flex-between gap-3 m-3">
+      <div className="flex-between flex-wrap gap-3 m-3">
         <Link href={`/?query=${startup?.category?.toLowerCase()}`}>
-          <p className="text-16-medium category-tag mb-0">{startup.category}</p>
+          <p className="max-w-[170px] text-16-medium category-tag mb-0 truncate">
+            {startup.category}
+          </p>
         </Link>
         <Button className="startup-card_btn" asChild>
           <Link href={`/startup/${startup._id}`}>Details</Link>
