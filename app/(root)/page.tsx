@@ -7,14 +7,9 @@ import { Suspense } from 'react';
 import StartupCardSkeleton from '@/components/StartupCardSkeleton';
 
 export type StartupTypeCard = Omit<Startup, 'author'> & { author?: Author };
+export type SearchParamsType = Promise<{ query?: string }>;
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: Promise<{ query?: string }>;
-}) {
-  const query = (await searchParams).query ?? null;
-
+export default async function Home({ searchParams }: { searchParams: SearchParamsType }) {
   return (
     <>
       <section className="pink_container pattern">
@@ -24,15 +19,19 @@ export default async function Home({
         <p className="sub-heading !max-w-3xl">
           Submit Ideas, Vote on Pitches, and Get Noticed in Virtual Competitions.
         </p>
-        <SearchForm query={query ?? ''} />
+        <Suspense>
+          <SearchForm searchParams={searchParams} />
+        </Suspense>
       </section>
       <section className="section_container">
         <p className="text-30-semibold">
-          {query ? `Search results for "${query}"` : 'Recent Pitches'}
+          <Suspense fallback={null}>
+            <SearchResultsHeader searchParams={searchParams} />
+          </Suspense>
         </p>
         <ul className="mt-7 card_grid">
           <Suspense fallback={<StartupCardSkeleton count={6} />}>
-            <StartUpCards query={query} />
+            <StartupCards searchParams={searchParams} />
           </Suspense>
         </ul>
         <Suspense>
@@ -42,8 +41,13 @@ export default async function Home({
     </>
   );
 }
+async function SearchResultsHeader({ searchParams }: { searchParams: SearchParamsType }) {
+  const query = (await searchParams).query ?? null;
+  return <>{query ? `Search results for "${query}"` : 'Recent Pitches'}</>;
+}
 
-async function StartUpCards({ query }: { query: string | null }) {
+async function StartupCards({ searchParams }: { searchParams: SearchParamsType }) {
+  const query = (await searchParams).query ?? null;
   const startups = (
     await sanityFetch({
       query: STARTUPS_QUERY,

@@ -1,10 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { use } from 'react';
 import { useRouter } from '@router/customized';
 import { Search, X } from 'lucide-react';
+import { SearchParamsType } from '@/app/(root)/page';
 
-const SearchForm = ({ query }: { query: string }) => {
+const SearchForm = ({ searchParams }: { searchParams: SearchParamsType }) => {
+  const query = use(searchParams)?.query ?? '';
   const [searchValue, setSearchValue] = useState(query);
   const router = useRouter();
 
