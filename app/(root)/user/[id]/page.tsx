@@ -7,8 +7,6 @@ import { auth } from '@/auth';
 import UserStartups from '@/components/UserStartups';
 import StartupCardSkeleton from '@/components/StartupCardSkeleton';
 
-export const experimental_ppr = true;
-
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const session = await auth();

@@ -1,8 +1,6 @@
 import React from 'react';
 import StartupForm from '@/components/StartupForm';
 
-export const experimental_ppr = true;
-
 const Page = () => {
   return (
     <>
