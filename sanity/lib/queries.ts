@@ -51,7 +51,10 @@ export const AUTHOR_BY_ID_QUERY = defineQuery(`
     name,
     username,
     image,
-    bio
+    bio,
+    startup_refs[] {
+      "id": _ref
+    }
 }
 `);
 
