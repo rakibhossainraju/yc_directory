@@ -1,7 +1,7 @@
 import React from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const StartupCardSkeleton = ({ count = 4 }: { count?: number }) => {
+const StartupCardSkeleton = ({ count = 3 }: { count?: number }) => {
   return Array.from({ length: count }).map((_, index) => (
     <div
       key={`${index}-skeleton-card`}
