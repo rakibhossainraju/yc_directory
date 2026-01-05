@@ -12,6 +12,18 @@ export const author = defineType({
       type: 'number',
     }),
     defineField({
+      name: 'startup_refs',
+      type: 'array',
+      title: 'Startup References',
+      description: 'Startups associated with this author',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'startup' }],
+        },
+      ],
+    }),
+    defineField({
       name: 'name',
       type: 'string',
     }),

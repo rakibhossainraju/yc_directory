@@ -30,6 +30,12 @@ export type Playlist = {
   }>;
 };
 
+export type Slug = {
+  _type: 'slug';
+  current?: string;
+  source?: string;
+};
+
 export type Startup = {
   _id: string;
   _type: 'startup';
@@ -48,8 +54,10 @@ export type Startup = {
   image?: string;
   category?: string;
   description?: string;
-  pitch?: string;
+  pitch?: Markdown;
 };
+
+export type Markdown = string;
 
 export type Author = {
   _id: string;
@@ -58,14 +66,19 @@ export type Author = {
   _updatedAt: string;
   _rev: string;
   id?: number;
+  startup_refs?: Array<{
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: 'startup';
+  }>;
   name?: string;
   username?: string;
   email?: string;
   image?: string;
   bio?: string;
 };
-
-export type Markdown = string;
 
 export type SanityImagePaletteSwatch = {
   _type: 'sanity.imagePaletteSwatch';
@@ -91,6 +104,17 @@ export type SanityImageDimensions = {
   height?: number;
   width?: number;
   aspectRatio?: number;
+};
+
+export type SanityImageMetadata = {
+  _type: 'sanity.imageMetadata';
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
 export type SanityImageHotspot = {
@@ -131,6 +155,13 @@ export type SanityFileAsset = {
   source?: SanityAssetSourceData;
 };
 
+export type SanityAssetSourceData = {
+  _type: 'sanity.assetSourceData';
+  name?: string;
+  id?: string;
+  url?: string;
+};
+
 export type SanityImageAsset = {
   _id: string;
   _type: 'sanity.imageAsset';
@@ -154,17 +185,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityImageMetadata = {
-  _type: 'sanity.imageMetadata';
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
 export type Geopoint = {
   _type: 'geopoint';
   lat?: number;
@@ -172,35 +192,22 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: 'slug';
-  current?: string;
-  source?: string;
-};
-
-export type SanityAssetSourceData = {
-  _type: 'sanity.assetSourceData';
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
 export type AllSanitySchemaTypes =
   | Playlist
+  | Slug
   | Startup
-  | Author
   | Markdown
+  | Author
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
+  | SanityImageMetadata
   | SanityImageHotspot
   | SanityImageCrop
   | SanityFileAsset
+  | SanityAssetSourceData
   | SanityImageAsset
-  | SanityImageMetadata
-  | Geopoint
-  | Slug
-  | SanityAssetSourceData;
+  | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: sanity/lib/queries.ts
 // Variable: STARTUPS_QUERY
@@ -275,7 +282,7 @@ export type STARTUP_DETAIL_QUERYResult = {
   slug: Slug | null;
   _createdAt: string;
   views: number | null;
-  pitch: string | null;
+  pitch: Markdown | null;
   category: string | null;
   image: string | null;
   description: string | null;
@@ -300,13 +307,16 @@ export type AUTHOR_BY_GITHUB_ID_QUERYResult = {
   bio: string | null;
 } | null;
 // Variable: AUTHOR_BY_ID_QUERY
-// Query: *[_type == 'author' && _id == $id][0] {    _id,    name,    username,    image,    bio}
+// Query: *[_type == 'author' && _id == $id][0] {    _id,    name,    username,    image,    bio,    startup_refs[] {      "id": _ref    }}
 export type AUTHOR_BY_ID_QUERYResult = {
   _id: string;
   name: string | null;
   username: string | null;
   image: string | null;
   bio: string | null;
+  startup_refs: Array<{
+    id: string;
+  }> | null;
 } | null;
 // Variable: PLAYLIST_BY_SLUG_QUERY
 // Query: *[_type == "playlist" && slug.current == $slug][0]{  _id,  title,  slug,  select[]->{    _id,    _createdAt,    title,    slug,    author->{      _id,      name,      slug,      image,      bio    },    views,    description,    category,    image,    pitch  }}
@@ -330,7 +340,7 @@ export type PLAYLIST_BY_SLUG_QUERYResult = {
     description: string | null;
     category: string | null;
     image: string | null;
-    pitch: string | null;
+    pitch: Markdown | null;
   }> | null;
 } | null;
 
@@ -343,7 +353,7 @@ declare module '@sanity/client' {
     "*[_type == 'startup' && _id == $id][0] {\n    _id, title, slug,\n    _createdAt, views, pitch,\n    category, image, description,\n    author -> {\n      _id, name, image, username\n    },\n  }": STARTUP_DETAIL_QUERYResult;
     "*[_type == 'startup' && _id == $id][0].views": STARTUP_VIEWS_QUERYResult;
     "\n*[_type == 'author' && id == $id][0] {\n    _id,\n    name,\n    username,\n    email,\n    image,\n    bio\n}\n": AUTHOR_BY_GITHUB_ID_QUERYResult;
-    "\n*[_type == 'author' && _id == $id][0] {\n    _id,\n    name,\n    username,\n    image,\n    bio\n}\n": AUTHOR_BY_ID_QUERYResult;
+    '\n*[_type == \'author\' && _id == $id][0] {\n    _id,\n    name,\n    username,\n    image,\n    bio,\n    startup_refs[] {\n      "id": _ref\n    }\n}\n': AUTHOR_BY_ID_QUERYResult;
     '*[_type == "playlist" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  select[]->{\n    _id,\n    _createdAt,\n    title,\n    slug,\n    author->{\n      _id,\n      name,\n      slug,\n      image,\n      bio\n    },\n    views,\n    description,\n    category,\n    image,\n    pitch\n  }\n}': PLAYLIST_BY_SLUG_QUERYResult;
   }
 }
