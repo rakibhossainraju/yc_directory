@@ -6,6 +6,7 @@ import { Author, Startup } from '@/sanity/types';
 import { sanityFetch, SanityLive } from '@/sanity/lib/live';
 import { Suspense } from 'react';
 import StartupCardSkeleton from '@/components/StartupCardSkeleton';
+import SearchFormSkeleton from '@/components/SearchFormSkeleton';
 
 export type StartupTypeCard = Omit<Startup, 'author'> & { author?: Author };
 export type SearchParamsType = Promise<{ query?: string }>;
@@ -20,7 +21,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
         <p className="sub-heading !max-w-3xl">
           Submit Ideas, Vote on Pitches, and Get Noticed in Virtual Competitions.
         </p>
-        <Suspense>
+        <Suspense fallback={<SearchFormSkeleton />}>
           <SearchForm searchParams={searchParams} />
         </Suspense>
       </section>
