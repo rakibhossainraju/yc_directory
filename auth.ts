@@ -20,6 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name,
           username: login,
           bio: bio || '',
+          startup_refs: [],
         });
       }
       return true;
