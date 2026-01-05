@@ -1,7 +1,8 @@
+import { cacheLife, cacheTag } from 'next/cache';
 import SearchForm from '@/components/SearchForm';
 import StartupCard from '@/components/StartupCard';
 import { STARTUPS_QUERY } from '@/sanity/lib/queries';
-import { Startup, Author } from '@/sanity/types';
+import { Author, Startup } from '@/sanity/types';
 import { sanityFetch, SanityLive } from '@/sanity/lib/live';
 import { Suspense } from 'react';
 import StartupCardSkeleton from '@/components/StartupCardSkeleton';
@@ -46,14 +47,21 @@ async function SearchResultsHeader({ searchParams }: { searchParams: SearchParam
   return <>{query ? `Search results for "${query}"` : 'Recent Pitches'}</>;
 }
 
-async function StartupCards({ searchParams }: { searchParams: SearchParamsType }) {
-  const query = (await searchParams).query ?? null;
-  const startups = (
+async function getStartupsCount(query: string | null) {
+  'use cache';
+  cacheTag('startups-' + (query ?? 'all'));
+  cacheLife('days');
+  return (
     await sanityFetch({
       query: STARTUPS_QUERY,
       params: { search: query },
     })
   ).data as StartupTypeCard[];
+}
+
+async function StartupCards({ searchParams }: { searchParams: SearchParamsType }) {
+  const query = (await searchParams).query ?? null;
+  const startups = await getStartupsCount(query);
 
   return (
     <>
