@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
     position: 'bottom-right',
   },
   turbopack: {
-    root: '/home/light/Desktop/yc_directory',
+    root: './',
   },
 };
 
