@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     ],
   },
   cacheComponents: true,
+  reactCompiler: true,
   devIndicators: {
     position: 'bottom-right',
   },
