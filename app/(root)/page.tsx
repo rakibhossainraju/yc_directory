@@ -7,6 +7,7 @@ import { sanityFetch, SanityLive } from '@/sanity/lib/live';
 import { Suspense } from 'react';
 import StartupCardSkeleton from '@/components/StartupCardSkeleton';
 import SearchFormSkeleton from '@/components/SearchFormSkeleton';
+import { client, clientFetch } from '@/sanity/lib/client';
 
 export type StartupTypeCard = Omit<Startup, 'author'> & { author?: Author };
 export type SearchParamsType = Promise<{ query?: string }>;
@@ -50,16 +51,15 @@ async function SearchResultsHeader({ searchParams }: { searchParams: SearchParam
 
 async function getStartupsCount(query: string | null) {
   'use cache';
-  cacheTag('startups-' + (query ?? 'all'));
+  const tag = `startups-${query ?? 'all'}`;
+  cacheTag(tag);
   cacheLife('days');
   await new Promise((resolve) => setTimeout(resolve, 10000));
-  console.log('Fetching startups with query:', query);
-  return (
-    await sanityFetch({
-      query: STARTUPS_QUERY,
-      params: { search: query },
-    })
-  ).data as StartupTypeCard[];
+  console.log('Fetching startups with query:', tag);
+  return (await clientFetch({
+    query: STARTUPS_QUERY,
+    params: { search: query },
+  })) as unknown as StartupTypeCard[];
 }
 
 async function StartupCards({ searchParams }: { searchParams: SearchParamsType }) {
