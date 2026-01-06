@@ -52,6 +52,7 @@ async function getStartupsCount(query: string | null) {
   'use cache';
   cacheTag('startups-' + (query ?? 'all'));
   cacheLife('days');
+  await new Promise((resolve) => setTimeout(resolve, 10000));
   console.log('Fetching startups with query:', query);
   return (
     await sanityFetch({
