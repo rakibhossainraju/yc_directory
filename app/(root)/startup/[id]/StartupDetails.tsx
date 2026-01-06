@@ -56,7 +56,7 @@ export const StartupDetails = async ({ params }: { params: StartupParamType }) =
                 <p className="text-20-medium !text-black-300">@{startup.author!.username!}</p>
               </div>
             </Link>
-            <Link href={`/public?query=${startup.category}`}>
+            <Link href={`/?query=${startup.category}`}>
               <span className="category-tag cursor-pointer">{startup.category}</span>
             </Link>
           </div>
