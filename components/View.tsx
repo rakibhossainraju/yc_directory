@@ -13,8 +13,8 @@ const View = async ({ id }: { id: string }) => {
       })
       .fetch(STARTUP_VIEWS_QUERY, { id })) ?? 0;
 
-  after(async () => {
-    await writeClient
+  after(() => {
+    writeClient
       .patch(id)
       .set({ views: totalViews + 1 })
       .commit();
