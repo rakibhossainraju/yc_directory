@@ -8,16 +8,10 @@ export const Navbar = async () => {
   const sessionPromise = auth();
 
   return (
-    <header className="px-5 py-3 bg-white shadow-sm font-work-sans min-h-[64px]">
-      <nav className="flex justify-between items-center">
+    <header className="px-5 bg-white shadow-sm font-work-sans">
+      <nav className="flex justify-between items-center min-h-16">
         <Link href="/">
-          <Image
-            src="/logo.png"
-            alt="Site Logo"
-            className="max-h-[21px]"
-            width={100}
-            height={100}
-          />
+          <Image src="/logo.png" alt="Site Logo" className="max-h-5.25" width={100} height={100} />
         </Link>
         <div className="flex items-center gap-5 text-black">
           <Suspense fallback={<NevBarMenuSkeleton />}>
