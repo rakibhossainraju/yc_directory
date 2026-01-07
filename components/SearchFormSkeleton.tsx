@@ -10,7 +10,7 @@ const SearchFormSkeleton = () => {
         type="text"
       />
       <div className="flex gap-2 pointer-events-none">
-        <button type="submit" className="search-btn pointer-events-none">
+        <button name="search btn" type="submit" className="search-btn pointer-events-none">
           <Search className="text-white pointer-events-none" />
         </button>
       </div>

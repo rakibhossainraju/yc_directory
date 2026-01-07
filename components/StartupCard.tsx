@@ -21,7 +21,7 @@ const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
             <p className="text-16-medium line-clap-1">{startup?.author?.name}</p>
           </Link>
           <Link href={`/startup/${startup._id}`}>
-            <h3 className="max-w-[280px] text-26-semibold line truncate">{startup.title}</h3>
+            <h3 className="max-w-70 text-26-semibold line truncate">{startup.title}</h3>
           </Link>
         </div>
         <Link href={`/user/${startup?.author?._id}`}>
@@ -40,7 +40,7 @@ const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
           src={startup?.image ?? ''}
           width={1000}
           height={500}
-          className="startup-card_img"
+          className="startup-card_img fade-in"
           alt={startup?.title ?? ''}
         />
       </Link>
