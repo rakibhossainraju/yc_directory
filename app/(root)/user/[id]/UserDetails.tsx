@@ -12,6 +12,8 @@ async function getUserDetails(id: string) {
   'use cache';
   cacheTag('user-details-' + id);
   cacheLife('days');
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+
   return await client.fetch(AUTHOR_BY_ID_QUERY, { id });
 }
 
