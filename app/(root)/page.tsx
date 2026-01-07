@@ -45,7 +45,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
       </section>
       <section className="section_container">
         <p className="text-30-semibold">
-          <Suspense fallback={null}>
+          <Suspense fallback={<>Recent Pitches</>}>
             <SearchResultsHeader searchParams={searchParams} />
           </Suspense>
         </p>
@@ -63,6 +63,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 }
 async function SearchResultsHeader({ searchParams }: { searchParams: SearchParamsType }) {
   const query = (await searchParams).query ?? null;
+  await new Promise((resolve) => setTimeout(resolve, 10000));
   return <>{query ? `Search results for "${query}"` : 'Recent Pitches'}</>;
 }
 
