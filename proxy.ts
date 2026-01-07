@@ -12,5 +12,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: '/startup/create', // e.g., your page route
+  matcher: ['/dashboard', '/startup/create'], // e.g., your page route
 };
