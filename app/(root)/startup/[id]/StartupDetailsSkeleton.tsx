@@ -4,7 +4,7 @@ export const StartupDetailsSkeleton = () => {
   return (
     <>
       <section className="pink_container pattern !main-h-[230px]">
-        <div className="tag">
+        <div className="time-tag">
           <Skeleton className="bg-primary/30 h-3 w-24 px-2 my-1 rounded!" />
         </div>
         <div className="heading w-[50%] flex flex-col items-center gap-4 p-4!">
