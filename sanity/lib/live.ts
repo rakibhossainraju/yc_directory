@@ -4,12 +4,12 @@
 import { defineLive } from 'next-sanity/live';
 import 'server-only';
 import { client } from './client';
-import { apiVersion } from '../env';
+import { apiVersion, projectId } from '../env';
 
 export const { sanityFetch, SanityLive } = defineLive({
   client: client.withConfig({
     apiVersion,
   }),
-  serverToken: false,
-  browserToken: false,
+  serverToken: projectId,
+  browserToken: projectId,
 });
