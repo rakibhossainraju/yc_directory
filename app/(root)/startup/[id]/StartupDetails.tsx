@@ -23,16 +23,16 @@ export const StartupDetails = async ({ params }: { params: StartupParamType }) =
   return (
     <>
       <section className="pink_container pattern !main-h-[230px]">
-        <p className="tag">{formateDate(startup._createdAt)}</p>
+        <p className="time-tag">{formateDate(startup._createdAt)}</p>
         <div className="heading">
           <h1 className="fade-in">{startup.title}</h1>
         </div>
-        <p className="sub-heading !max-w-5xl fade-in">{startup.description}</p>
+        <p className="sub-heading max-w-5xl! fade-in">{startup.description}</p>
       </section>
 
       <section className="section_container">
         <img
-          className="w-full h-auto max-w-[1200px] max-h-[700px] bg-primary-100 rounded-xl object-cover drop-shadow-lg mx-auto"
+          className="w-full h-auto max-w-300 max-h-175 bg-primary-100 rounded-xl object-cover drop-shadow-lg mx-auto"
           src={startup.image!}
           alt={startup.title!}
           width={1200}
@@ -53,7 +53,7 @@ export const StartupDetails = async ({ params }: { params: StartupParamType }) =
               </Avatar>
               <div>
                 <p className="text-20-medium">{startup.author!.name!}</p>
-                <p className="text-20-medium !text-black-300">@{startup.author!.username!}</p>
+                <p className="text-20-medium text-black-300!">@{startup.author!.username!}</p>
               </div>
             </Link>
             <Link href={`/?query=${startup.category}`}>

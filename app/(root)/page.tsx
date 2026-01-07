@@ -17,8 +17,7 @@ async function getStartupsCount(query: string | null) {
   const tag = `startups-${query ?? 'all'}`;
   cacheTag(tag);
   cacheLife('days');
-  await new Promise((resolve) => setTimeout(resolve, 10000));
-  console.log('Fetching startups with query:', tag);
+
   return (await clientFetch({
     query: STARTUPS_QUERY,
     params: { search: query },
@@ -45,7 +44,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
       </section>
       <section className="section_container">
         <p className="text-30-semibold">
-          <Suspense fallback={null}>
+          <Suspense fallback={<>Recent Pitches</>}>
             <SearchResultsHeader searchParams={searchParams} />
           </Suspense>
         </p>

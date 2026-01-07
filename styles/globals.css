@@ -50,7 +50,7 @@
     @apply w-full bg-primary min-h-[530px] flex justify-center items-center flex-col py-10 px-6;
   }
 
-  .tag {
+  .time-tag {
     @apply bg-primary-100 px-6 py-3 font-work-sans font-bold rounded-sm uppercase relative before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;
   }
 
