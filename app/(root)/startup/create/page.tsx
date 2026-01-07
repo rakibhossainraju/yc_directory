@@ -1,7 +1,9 @@
 import React from 'react';
 import StartupForm from '@/components/StartupForm';
 
-const Page = () => {
+const Page = async () => {
+  'use cache';
+
   return (
     <>
       <section className="pink_container pattern !min-h-[230px]">

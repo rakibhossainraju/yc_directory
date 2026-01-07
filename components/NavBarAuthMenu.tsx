@@ -9,6 +9,7 @@ interface NavbarUserMenuProps {
 }
 
 export async function NavBarAuthMenu({ sessionPromise }: NavbarUserMenuProps) {
+  'use cache';
   const session = await sessionPromise;
   const user = session?.user;
   const isLoggedIn = session !== null && user !== undefined;
