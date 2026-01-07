@@ -17,8 +17,7 @@ async function getStartupsCount(query: string | null) {
   const tag = `startups-${query ?? 'all'}`;
   cacheTag(tag);
   cacheLife('days');
-  await new Promise((resolve) => setTimeout(resolve, 10000));
-  console.log('Fetching startups with query:', tag);
+
   return (await clientFetch({
     query: STARTUPS_QUERY,
     params: { search: query },
@@ -33,6 +32,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
   return (
     <>
       <section className="pink_container pattern">
+        <h1 className="font-bold text-5xl">Node Environment: {process.env.NODE_ENV}</h1>
         <h1 className="heading rounded-sm">
           Pitch Your Startup, <br /> Connect With Entrepreneurs
         </h1>
@@ -63,7 +63,6 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 }
 async function SearchResultsHeader({ searchParams }: { searchParams: SearchParamsType }) {
   const query = (await searchParams).query ?? null;
-  await new Promise((resolve) => setTimeout(resolve, 10000));
   return <>{query ? `Search results for "${query}"` : 'Recent Pitches'}</>;
 }
 
