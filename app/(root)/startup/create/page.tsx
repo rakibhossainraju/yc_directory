@@ -6,7 +6,7 @@ const Page = async () => {
 
   return (
     <>
-      <section className="pink_container pattern !min-h-[230px]">
+      <section className="pink_container pattern min-h-57.5!">
         <h1 className="heading">Submit Your Startup</h1>
       </section>
       <StartupForm />
