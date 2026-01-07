@@ -32,7 +32,6 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
   return (
     <>
       <section className="pink_container pattern">
-        <h1 className="font-bold text-5xl">Node Environment: {process.env.NODE_ENV}</h1>
         <h1 className="heading rounded-sm">
           Pitch Your Startup, <br /> Connect With Entrepreneurs
         </h1>
