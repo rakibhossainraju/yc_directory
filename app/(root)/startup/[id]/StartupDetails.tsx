@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import EditorPicks from '@/components/EditorPicks';
 import View from '@/components/View';
 import { getStartupDetails, StartupParamType } from '@/app/(root)/startup/[id]/page';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const md = markdownIt();
 
@@ -75,7 +76,7 @@ export const StartupDetails = async ({ params }: { params: StartupParamType }) =
           <EditorPicks />
         </Suspense>
       </section>
-      <Suspense fallback={null}>
+      <Suspense fallback={<Skeleton className="view_skeleton" />}>
         <View id={id} />
       </Suspense>
     </>
