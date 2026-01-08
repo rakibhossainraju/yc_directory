@@ -7,7 +7,7 @@ import { Link } from '@/lib/custom-router';
 
 const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
   return (
-    <li key={startup._id} className="startup-card group">
+    <li key={startup._id} className="startup-card lg:min-w-[350px] flex-1 group">
       <div className="flex-between">
         <p className="startup_card_date">{formateDate(startup._createdAt)}</p>
         <div className="flex gap-1 5">

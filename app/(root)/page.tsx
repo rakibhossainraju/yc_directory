@@ -1,28 +1,14 @@
-import { cacheLife, cacheTag } from 'next/cache';
 import SearchForm from '@/components/SearchForm';
 import StartupCard from '@/components/StartupCard';
-import { STARTUPS_QUERY } from '@/sanity/lib/queries';
 import { Author, Startup } from '@/sanity/types';
 import { SanityLive } from '@/sanity/lib/live';
 import { Suspense } from 'react';
 import StartupCardSkeleton from '@/components/StartupCardSkeleton';
 import SearchFormSkeleton from '@/components/SearchFormSkeleton';
-import { clientFetch } from '@/sanity/lib/client';
+import { getStartupsByQuery } from '@queries';
 
 export type StartupTypeCard = Omit<Startup, 'author'> & { author?: Author };
 export type SearchParamsType = Promise<{ query?: string }>;
-
-async function getStartupsCount(query: string | null) {
-  'use cache';
-  const tag = `startups-${query ?? 'all'}`;
-  cacheTag(tag);
-  cacheLife('days');
-
-  return (await clientFetch({
-    query: STARTUPS_QUERY,
-    params: { search: query },
-  })) as unknown as StartupTypeCard[];
-}
 
 export async function generateStaticParams() {
   return [{ query: 'all' }];
@@ -67,7 +53,7 @@ async function SearchResultsHeader({ searchParams }: { searchParams: SearchParam
 
 async function StartupCards({ searchParams }: { searchParams: SearchParamsType }) {
   const query = (await searchParams).query ?? null;
-  const startups = await getStartupsCount(query);
+  const startups = await getStartupsByQuery(query);
 
   return (
     <>

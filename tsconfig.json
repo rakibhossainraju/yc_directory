@@ -32,6 +32,12 @@
       "@router/customized": [
         "./lib/custom-router"
       ],
+      "@lib": [
+        "./lib"
+      ],
+      "@queries": [
+        "./lib/queries"
+      ],
       "nprogress": [
         "./lib/nprogress"
       ]
