@@ -45,7 +45,7 @@ const nextConfig: NextConfig = {
     position: 'bottom-right',
   },
   turbopack: {
-    root: './',
+    root: process.cwd(),
   },
 };
 
