@@ -9,6 +9,7 @@ import '../styles/nprogress.css';
 import { Toaster } from '@/components/ui/sonner';
 import { HandleOnComplete } from '@/lib/custom-router';
 import ProgressBarController from '@/components/ProgressBarController';
+import { ViewTransition } from 'react';
 
 const workSans = Work_Sans({
   variable: '--font-work-sans',
@@ -39,7 +40,7 @@ export default function RootLayout({
       <body className={workSans.variable}>
         <ProgressBarController />
         <HandleOnComplete />
-        {children}
+        <ViewTransition>{children}</ViewTransition>
         <Toaster richColors />
       </body>
     </html>

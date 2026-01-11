@@ -1,7 +1,7 @@
 import SearchForm from '@/components/SearchForm';
 import StartupCard from '@/components/StartupCard';
 import { Author, Startup } from '@/sanity/types';
-import { Suspense } from 'react';
+import { Suspense, ViewTransition } from 'react';
 import StartupCardSkeleton from '@/components/StartupCardSkeleton';
 import SearchFormSkeleton from '@/components/SearchFormSkeleton';
 import { getStartupsByQuery } from '@lib/queries';
@@ -35,7 +35,9 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
         </p>
         <ul className="mt-7 card_grid">
           <Suspense fallback={<StartupCardSkeleton count={6} />}>
-            <StartupCards searchParams={searchParams} />
+            <ViewTransition enter="slide-up" exit="slide-down">
+              <StartupCards searchParams={searchParams} />
+            </ViewTransition>
           </Suspense>
         </ul>
       </section>

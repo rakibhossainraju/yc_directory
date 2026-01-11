@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, startTransition } from 'react';
 
 import { onStart } from '../events';
 import { shouldTriggerStartEvent } from './should-trigger-start-event';
@@ -37,8 +37,10 @@ export const Link = forwardRef<HTMLAnchorElement, Props>(function Link(
     <NextLink
       href={href as NextLinkProps['href']}
       onClick={(event) => {
-        if (shouldTriggerStartEvent(String((href as any) ?? ''), event)) onStart();
-        if (onClick) onClick(event as any);
+        startTransition(() => {
+          if (shouldTriggerStartEvent(String((href as any) ?? ''), event)) onStart();
+          if (onClick) onClick(event as any);
+        });
       }}
       {...nextProps}
       ref={ref as any}
