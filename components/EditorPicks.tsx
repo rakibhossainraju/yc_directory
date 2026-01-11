@@ -1,13 +1,10 @@
-import { client } from '@/sanity/lib/client';
-import { PLAYLIST_BY_SLUG_QUERY } from '@/sanity/lib/queries';
 import React from 'react';
 import StartupCard from './StartupCard';
 import { StartupTypeCard } from '@/app/(root)/page';
+import { getStartupsBySlugQuery } from '@lib/queries';
 
 const EditorPicks = async () => {
-  const result = await client.fetch(PLAYLIST_BY_SLUG_QUERY, {
-    slug: 'editor-picks',
-  });
+  const result = await getStartupsBySlugQuery();
   if (!result && !result!.select?.length) return null;
 
   return (
