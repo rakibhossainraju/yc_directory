@@ -40,7 +40,7 @@ const StartupCard = ({ startup }: { startup: StartupTypeCard }) => {
           src={startup?.image ?? ''}
           width={1000}
           height={500}
-          className="startup-card_img fade-in"
+          className="startup-card_img"
           alt={startup?.title ?? ''}
         />
       </Link>

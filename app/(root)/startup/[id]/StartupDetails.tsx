@@ -26,9 +26,9 @@ export const StartupDetails = async ({ params }: { params: StartupParamType }) =
       <section className="pink_container pattern !main-h-[230px]">
         <p className="time-tag">{formateDate(startup._createdAt)}</p>
         <div className="heading">
-          <h1 className="fade-in">{startup.title}</h1>
+          <h1 className="">{startup.title}</h1>
         </div>
-        <p className="sub-heading max-w-5xl! fade-in">{startup.description}</p>
+        <p className="sub-heading max-w-5xl! ">{startup.description}</p>
       </section>
 
       <section className="section_container">
