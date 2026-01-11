@@ -6,13 +6,14 @@ import { Link } from '@router/customized';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import EditorPicks from '@/components/EditorPicks';
 import View from '@/components/View';
-import { getStartupDetails, StartupParamType } from '@/app/(root)/startup/[id]/page';
+import { StartupParamType } from '@/app/(root)/startup/[id]/page';
+import { getStartupDetailsById } from '@lib/queries';
 
 const md = markdownIt();
 
 export const StartupDetails = async ({ params }: { params: StartupParamType }) => {
   const { id } = await params;
-  const startup = await getStartupDetails(id);
+  const startup = await getStartupDetailsById(id);
 
   if (!startup) {
     redirect('/404');
@@ -76,7 +77,7 @@ export const StartupDetails = async ({ params }: { params: StartupParamType }) =
         </Suspense>
       </section>
       <Suspense fallback={null}>
-        <View id={id} />
+        <View startupId={id} />
       </Suspense>
     </>
   );
