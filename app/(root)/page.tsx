@@ -54,7 +54,7 @@ async function StartupCards({ searchParams }: { searchParams: SearchParamsType }
   return (
     <>
       {startups.map((startup, index) => (
-        <StartupCard key={(startup._id + index).toString()} startup={startup} />
+        <StartupCard key={startup._id + '-' + index} startup={startup} />
       ))}
     </>
   );
