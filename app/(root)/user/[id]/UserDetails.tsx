@@ -1,24 +1,14 @@
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
-import { cacheLife, cacheTag } from 'next/cache';
 import Image from 'next/image';
 import { auth } from '@/auth';
-import { client } from '@/sanity/lib/client';
-import { AUTHOR_BY_ID_QUERY } from '@/sanity/lib/queries';
 import StartupCardSkeleton from '@/components/StartupCardSkeleton';
 import UserStartups from '@/components/UserStartups';
-
-async function getUserDetails(id: string) {
-  'use cache';
-  cacheTag('user-details-' + id);
-  cacheLife('days');
-
-  return await client.fetch(AUTHOR_BY_ID_QUERY, { id });
-}
+import { getUserDetailsById } from '@lib/queries';
 
 export async function UserDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const user = await getUserDetails(id);
+  const user = await getUserDetailsById(id);
   if (!user) return notFound();
   const session = await auth();
 
