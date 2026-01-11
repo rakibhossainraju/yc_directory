@@ -29,6 +29,9 @@
       "@styles/*": [
         "./styles/*"
       ],
+      "@lib/*": [
+        "./lib/*"
+      ],
       "@router/customized": [
         "./lib/custom-router"
       ],
