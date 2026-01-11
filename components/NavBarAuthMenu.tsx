@@ -1,7 +1,5 @@
-'use client';
-import { use } from 'react';
-import { signIn, signOut } from 'next-auth/react';
 import { Session } from 'next-auth';
+import { signIn, signOut } from '@/auth';
 import { LogOut, BadgePlus, LogIn } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Link } from '@router/customized';
@@ -10,8 +8,8 @@ interface NavbarUserMenuProps {
   sessionPromise: Promise<Session | null>;
 }
 
-export function NavBarAuthMenu({ sessionPromise }: NavbarUserMenuProps) {
-  const session = use(sessionPromise);
+export async function NavBarAuthMenu({ sessionPromise }: NavbarUserMenuProps) {
+  const session = await sessionPromise;
   const user = session?.user;
   const isLoggedIn = session !== null && user !== undefined;
 
@@ -22,9 +20,9 @@ export function NavBarAuthMenu({ sessionPromise }: NavbarUserMenuProps) {
         <BadgePlus className="size-6 sm:hidden text-red-500" />
       </Link>
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          signOut();
+        action={async () => {
+          'use server';
+          await signOut({ redirectTo: '/' });
         }}
         className="flex items-center"
       >
@@ -41,18 +39,20 @@ export function NavBarAuthMenu({ sessionPromise }: NavbarUserMenuProps) {
       </Link>
     </>
   ) : (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        signIn('github');
-      }}
-      className="flex items-center"
-    >
-      <button type="submit">
-        <span className="max-sm:hidden ">Login</span>
-        <LogIn className="size-6 sm:hidden text-red-500" />
-      </button>
-    </form>
+    <>
+      <form
+        action={async () => {
+          'use server';
+          await signIn('git');
+        }}
+        className="flex items-center"
+      >
+        <button type="submit">
+          <span className="max-sm:hidden ">Login</span>
+          <LogIn className="size-6 sm:hidden text-red-500" />
+        </button>
+      </form>
+    </>
   );
 }
 
