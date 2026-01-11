@@ -1,26 +1,24 @@
 'use server';
 import 'server-only';
 import { cacheLife, cacheTag } from 'next/cache';
-import { sanityFetch } from '@/sanity/lib/live';
 import {
-  STARTUPS_QUERY,
   STARTUP_DETAIL_QUERY,
+  STARTUP_VIEWS_QUERY,
   STARTUPS_BY_AUTHOR_ID_QUERY,
   STARTUPS_BY_SLUG_QUERY,
-  STARTUP_VIEWS_QUERY,
+  STARTUPS_QUERY,
 } from '@/sanity/lib/queries';
-import { clientFetch, client } from '@/sanity/lib/client';
+import { client, clientFetch } from '@/sanity/lib/client';
 import { StartupTypeCard } from '@/app/(root)/page';
 
 export async function getStartupDetailsById(id: string) {
   'use cache';
   cacheTag('startup-details-' + id);
   cacheLife('days');
-  const { data } = await sanityFetch({
+  return await clientFetch({
     query: STARTUP_DETAIL_QUERY,
     params: { id },
   });
-  return data;
 }
 
 export async function getStartupsByQuery(query: string | null) {
@@ -61,6 +59,6 @@ export async function getStartupTotalViewCount(startupId: string) {
       .withConfig({
         useCdn: false,
       })
-      .fetch(STARTUP_VIEWS_QUERY, { startupId })) ?? 0
+      .fetch(STARTUP_VIEWS_QUERY, { id: startupId })) ?? 0
   );
 }

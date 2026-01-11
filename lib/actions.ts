@@ -52,3 +52,10 @@ export async function createStartup(formValues: StartupData): CreateStartupRespo
     return { error: 'Something went wrong', status: Status.ERROR };
   }
 }
+
+export async function incrementStartupViews(startupId: string, currentViews = 0): Promise<void> {
+  writeClient
+    .patch(startupId)
+    .set({ views: currentViews + 1 })
+    .commit();
+}

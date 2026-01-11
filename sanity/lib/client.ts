@@ -21,7 +21,7 @@ export async function clientFetch<const QueryString extends string>({
   revalidate?: number | false;
   tags?: string[];
 }) {
-  return client.fetch(query, params, {
+  return await client.fetch(query, params, {
     next: {
       revalidate: tags.length ? false : revalidate, // for simple, time-based revalidation
       tags, // for tag-based revalidation

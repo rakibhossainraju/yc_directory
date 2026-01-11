@@ -1,18 +1,12 @@
 import React from 'react';
 import Ping from '@/components/Ping';
 import { after } from 'next/server';
-import { writeClient } from '@/sanity/lib/write-client';
 import { getStartupTotalViewCount } from '@lib/queries';
+import { incrementStartupViews } from '@lib/actions';
 
 const View = async ({ startupId }: { startupId: string }) => {
   const totalViews = await getStartupTotalViewCount(startupId);
-
-  after(() => {
-    writeClient
-      .patch(startupId)
-      .set({ views: totalViews + 1 })
-      .commit();
-  });
+  after(() => incrementStartupViews(startupId, totalViews));
 
   return (
     <div className="view-container">
