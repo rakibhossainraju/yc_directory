@@ -1,21 +1,15 @@
 import React from 'react';
 import Ping from '@/components/Ping';
 import { after } from 'next/server';
-import { STARTUP_VIEWS_QUERY } from '@/sanity/lib/queries';
-import { client } from '@/sanity/lib/client';
 import { writeClient } from '@/sanity/lib/write-client';
+import { getStartupTotalViewCount } from '@lib/queries';
 
-const View = async ({ id }: { id: string }) => {
-  const totalViews =
-    (await client
-      .withConfig({
-        useCdn: false,
-      })
-      .fetch(STARTUP_VIEWS_QUERY, { id })) ?? 0;
+const View = async ({ startupId }: { startupId: string }) => {
+  const totalViews = await getStartupTotalViewCount(startupId);
 
   after(() => {
     writeClient
-      .patch(id)
+      .patch(startupId)
       .set({ views: totalViews + 1 })
       .commit();
   });
