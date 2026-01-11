@@ -28,7 +28,7 @@ export async function getStartupsByQuery(query: string | null) {
   const tag = `startups-${query ?? 'all'}`;
   cacheTag(tag);
   cacheLife('days');
-
+  await new Promise((resolve) => setTimeout(resolve, 10000));
   return (await clientFetch({
     query: STARTUPS_QUERY,
     params: { search: query },
