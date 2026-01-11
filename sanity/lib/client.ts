@@ -21,6 +21,7 @@ export async function clientFetch<const QueryString extends string>({
   revalidate?: number | false;
   tags?: string[];
 }) {
+  await new Promise((resolve) => setTimeout(resolve, 4000));
   return await client.fetch(query, params, {
     next: {
       revalidate: tags.length ? false : revalidate, // for simple, time-based revalidation
