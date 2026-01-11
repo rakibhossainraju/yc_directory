@@ -3,7 +3,6 @@ import SearchForm from '@/components/SearchForm';
 import StartupCard from '@/components/StartupCard';
 import { STARTUPS_QUERY } from '@/sanity/lib/queries';
 import { Author, Startup } from '@/sanity/types';
-import { SanityLive } from '@/sanity/lib/live';
 import { Suspense } from 'react';
 import StartupCardSkeleton from '@/components/StartupCardSkeleton';
 import SearchFormSkeleton from '@/components/SearchFormSkeleton';
@@ -53,9 +52,6 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
             <StartupCards searchParams={searchParams} />
           </Suspense>
         </ul>
-        <Suspense>
-          <SanityLive />
-        </Suspense>
       </section>
     </>
   );
