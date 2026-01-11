@@ -10,7 +10,8 @@ import { formSchema } from '@/lib/validation';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { createStartup, Status } from '@/lib/actions';
+import { createStartup } from '@/lib/actions';
+import { STATUS } from '@lib/constants';
 
 const STARTUP_FIELDS = [
   {
@@ -81,7 +82,7 @@ const StartupForm = () => {
     try {
       await formSchema.parseAsync(formValues);
       const { id, status } = await createStartup(formValues);
-      if (!id || status === Status.ERROR) {
+      if (!id || status === STATUS.ERROR) {
         toast.error('Something went wrong while creating your startup pitch');
         return {
           ...formValues,

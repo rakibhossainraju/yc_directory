@@ -9,15 +9,11 @@ import { auth } from '@/auth';
 import { isSessionInValid } from '@/lib/server-utils';
 import { StartupData } from '@/components/StartupForm';
 import { writeClient } from '@/sanity/lib/write-client';
-
-export enum Status {
-  SUCCESS = 'SUCCESS',
-  ERROR = 'ERROR',
-}
+import { STATUS } from '@lib/constants';
 
 interface ActionResponse {
   error: string;
-  status: Status;
+  status: STATUS;
   id?: string;
 }
 
@@ -25,7 +21,7 @@ export type CreateStartupResponse = Promise<ActionResponse>;
 
 export async function createStartup(formValues: StartupData): CreateStartupResponse {
   const session = await auth();
-  if (isSessionInValid(session)) return { error: 'Not signed in', status: Status.ERROR };
+  if (isSessionInValid(session)) return { error: 'Not signed in', status: STATUS.ERROR };
 
   try {
     const slug = slugify(formValues.title, { lower: true, strict: true });
@@ -47,9 +43,9 @@ export async function createStartup(formValues: StartupData): CreateStartupRespo
       ])
       .commit();
     updateTag('startups-all');
-    return { error: '', status: Status.SUCCESS, id: res._id };
+    return { error: '', status: STATUS.SUCCESS, id: res._id };
   } catch {
-    return { error: 'Something went wrong', status: Status.ERROR };
+    return { error: 'Something went wrong', status: STATUS.ERROR };
   }
 }
 
