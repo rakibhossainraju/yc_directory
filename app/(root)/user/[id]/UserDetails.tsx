@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, ViewTransition } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { auth } from '@/auth';
@@ -34,7 +34,9 @@ export async function UserDetails({ params }: { params: Promise<{ id: string }> 
           <ul className="card_grid-sm">
             {user.startup_refs?.length && (
               <Suspense fallback={<StartupCardSkeleton count={user.startup_refs.length} />}>
-                <UserStartups userId={id} />
+                <ViewTransition>
+                  <UserStartups userId={id} />
+                </ViewTransition>
               </Suspense>
             )}
           </ul>
