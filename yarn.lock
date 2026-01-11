@@ -2480,15 +2480,6 @@
     "@portabletext/toolkit" "^5.0.1"
     "@portabletext/types" "^4.0.1"
 
-"@portabletext/sanity-bridge@^1.1.2":
-  version "1.2.14"
-  resolved "https://registry.yarnpkg.com/@portabletext/sanity-bridge/-/sanity-bridge-1.2.14.tgz#e4a72bcfc8771ecc8c4291a4dc460390cd0c7021"
-  integrity sha512-Is4ggV86dEMm1XjTJVLswsCeWobJm5E61T9jzm64eyr9d25oVEr9lqskxPuXemap6m9t3lnKDln/Ey/qEaAeCw==
-  dependencies:
-    "@portabletext/schema" "^2.1.0"
-    "@sanity/schema" "^4.20.3"
-    "@sanity/types" "^4.20.3"
-
 "@portabletext/sanity-bridge@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@portabletext/sanity-bridge/-/sanity-bridge-2.0.0.tgz#2976b92a48dc3f2b0dec82c9a55d0bdb2e1ed3d3"
@@ -2498,7 +2489,7 @@
     "@sanity/schema" "^5.0.0"
     "@sanity/types" "^5.0.0"
 
-"@portabletext/schema@^2.1.0", "@portabletext/schema@^2.1.1":
+"@portabletext/schema@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@portabletext/schema/-/schema-2.1.1.tgz#cdb06c5b29dcd2f67ef665f2dd2f1fa087e86c9e"
   integrity sha512-cH5ZleN0nw3W7xYBvOfMoAhGdkz6XFGhk0yuXcAZX9rwrtWb6qfQVLcieGC5tmIsrDFjQeVMro64vIFg5tz6vA==
@@ -3189,7 +3180,7 @@
     lodash-es "^4.17.22"
     object-inspect "^1.13.4"
 
-"@sanity/schema@^4.20.3", "@sanity/schema@^4.4.1":
+"@sanity/schema@^4.4.1":
   version "4.22.0"
   resolved "https://registry.yarnpkg.com/@sanity/schema/-/schema-4.22.0.tgz#68f94ba53347bee581dd40ec6eec8300962d8bd2"
   integrity sha512-39cH5XwMsdLPuntLJyX+bre7FJyZvB3foDhHL7hUx4GCCOZ41X+6QV/yj8mbPzLSTbyhH7nNDBXrBYhvjig84Q==
@@ -3250,7 +3241,7 @@
     "@actions/github" "^6.0.0"
     yaml "^2.6.1"
 
-"@sanity/types@4.22.0", "@sanity/types@^4.20.3", "@sanity/types@^4.21.0", "@sanity/types@^4.4.1":
+"@sanity/types@4.22.0", "@sanity/types@^4.21.0", "@sanity/types@^4.4.1":
   version "4.22.0"
   resolved "https://registry.yarnpkg.com/@sanity/types/-/types-4.22.0.tgz#c4f5894d906c7b3cb7d6b2d847d96a2291394b6c"
   integrity sha512-VWAUc8Xtj4IipQt99SzudRldJWHfBVnde+g5qnLZ/Nc1MpFjGiRWu/3smRN5mPOqlrtUfrr0ho/fBZnjE1CEMg==
@@ -9629,7 +9620,7 @@ sanity-plugin-markdown@^6.0.0:
     "@sanity/ui" "^3.0.5"
     react-simplemde-editor "^5.2.0"
 
-sanity@^5.1.0:
+sanity@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/sanity/-/sanity-5.2.0.tgz#57e1059e9f5626584b037afaec2f45f4abdf39a6"
   integrity sha512-Gv+Pwvo31p0qEfuIWZR2lv1Z7vO5mdQY+htNTsQlKmtF/Kndua5fm3/eHFDIRyHarLnECosuL3DRLqnd05iWMw==
