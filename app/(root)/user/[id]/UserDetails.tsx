@@ -1,16 +1,19 @@
 import { Suspense, ViewTransition } from 'react';
-import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { auth } from '@/auth';
 import StartupCardSkeleton from '@/components/StartupCardSkeleton';
 import UserStartups from '@/components/UserStartups';
-import { getUserDetailsById } from '@lib/queries';
+import { getUserDetailsById } from '@/lib/queries';
+import { notFound } from 'next/navigation';
+interface PropsType {
+  userId: string;
+}
 
-export async function UserDetails({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const user = await getUserDetailsById(id);
+export async function UserDetails({ userId }: PropsType) {
+  // const session = await auth();
+  const user = await getUserDetailsById(userId);
   if (!user) return notFound();
-  const session = await auth();
+  const id = user._id;
 
   return (
     <>
@@ -20,8 +23,8 @@ export async function UserDetails({ params }: { params: Promise<{ id: string }> 
             <h3 className="text-24-black uppercase text-center line-clamp-1">{user.name}</h3>
           </div>
           <Image
-            src={user.image!}
-            alt={user.name! + ' Avatar'}
+            src={user.image}
+            alt={user.name + ' Avatar'}
             width={200}
             height={300}
             className="profile_image fade-in"
@@ -30,14 +33,14 @@ export async function UserDetails({ params }: { params: Promise<{ id: string }> 
           <p className="mt-1 text-center text-14-normal">{user.bio}</p>
         </div>
         <div className="flex-1  flex flex-col gap-5 lg:-mt-5">
-          <p className="text-30-bold fade-in">{session?.id === id ? 'Your' : 'All'} Startups</p>
+          {/* <p className="text-30-bold fade-in">{session?.id === id ? 'Your' : 'All'} Startups</p> */}
           <ul className="card_grid-sm">
             {user.startup_refs?.length && (
-              <Suspense fallback={<StartupCardSkeleton count={user.startup_refs.length} />}>
-                <ViewTransition>
-                  <UserStartups userId={id} />
-                </ViewTransition>
-              </Suspense>
+              // <Suspense fallback={<StartupCardSkeleton count={user.startup_refs.length} />}>
+              <ViewTransition>
+                <UserStartups userId={id} />
+              </ViewTransition>
+              // </Suspense>
             )}
           </ul>
         </div>
