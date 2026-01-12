@@ -41,6 +41,11 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   reactCompiler: true,
+  experimental: {
+    staleTimes: {
+      dynamic: 30,
+    },
+  },
   devIndicators: {
     position: 'bottom-right',
   },
