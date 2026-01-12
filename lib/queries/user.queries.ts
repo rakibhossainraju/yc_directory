@@ -12,7 +12,7 @@ export interface UserProfile {
 }
 
 export async function getUserDetailsById(id: string) {
-  'use cache';
+  'use cache: remote';
   const tag = 'user-details-' + id;
   cacheTag(tag);
   cacheLife('days');

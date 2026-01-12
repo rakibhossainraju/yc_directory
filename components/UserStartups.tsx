@@ -1,4 +1,3 @@
-import React from 'react';
 import StartupCard from '@/components/StartupCard';
 import { StartupTypeCard } from '@/app/(root)/page';
 import { getStartupsByUserId } from '@lib/queries';

@@ -12,7 +12,7 @@ import { client, clientFetch } from '@/sanity/lib/client';
 import { StartupTypeCard } from '@/app/(root)/page';
 
 export async function getStartupDetailsById(id: string) {
-  'use cache';
+  'use cache: remote';
   const tag = 'startup-details-' + id;
   cacheTag(tag);
   cacheLife('days');
@@ -24,7 +24,7 @@ export async function getStartupDetailsById(id: string) {
 }
 
 export async function getStartupsByQuery(query: string | null) {
-  'use cache';
+  'use cache: remote';
   const tag = `startups-${query ?? 'all'}`;
   cacheTag(tag);
   cacheLife('days');
@@ -36,7 +36,7 @@ export async function getStartupsByQuery(query: string | null) {
 }
 
 export async function getStartupsByUserId(userId: string) {
-  'use cache';
+  'use cache: remote';
   const tag = 'user-startups-' + userId;
   cacheTag(tag);
   cacheLife('days');
@@ -48,7 +48,7 @@ export async function getStartupsByUserId(userId: string) {
 }
 
 export async function getStartupsBySlugQuery(slug = 'editor-picks') {
-  'use cache';
+  'use cache: remote';
   const tag = 'startups-' + slug;
   cacheTag(tag);
   cacheLife('weeks');
