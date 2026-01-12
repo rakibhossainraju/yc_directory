@@ -1,6 +1,5 @@
 import { ViewTransition } from 'react';
 import { UserDetails } from '@/app/(root)/user/[id]/UserDetails';
-import { redirect } from 'next/dist/server/api-utils';
 import { notFound } from 'next/navigation';
 
 export function generateStaticParams() {
