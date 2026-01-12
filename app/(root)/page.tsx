@@ -35,7 +35,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
         </p>
         <ul className="mt-7 card_grid">
           <Suspense fallback={<StartupCardSkeleton count={6} />}>
-            <ViewTransition enter="slide-up" exit="slide-down">
+            <ViewTransition>
               <StartupCards searchParams={searchParams} />
             </ViewTransition>
           </Suspense>
