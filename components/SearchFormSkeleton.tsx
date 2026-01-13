@@ -2,7 +2,7 @@ import { Search } from 'lucide-react';
 
 const SearchFormSkeleton = () => {
   return (
-    <div className="animate-pulse search-form cursor-wait">
+    <div className="search-form cursor-wait">
       <input
         name="query"
         placeholder="Search Startups"
