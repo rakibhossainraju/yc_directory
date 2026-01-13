@@ -12,7 +12,14 @@
  * ---------------------------------------------------------------------------------
  */
 
-// Source: schema.json
+// Source: sanity/extract.json
+export type StartupReference = {
+  _ref: string;
+  _type: 'reference';
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: 'startup';
+};
+
 export type Playlist = {
   _id: string;
   _type: 'playlist';
@@ -21,19 +28,24 @@ export type Playlist = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  select?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: 'startup';
-  }>;
+  select?: Array<
+    {
+      _key: string;
+    } & StartupReference
+  >;
 };
 
 export type Slug = {
   _type: 'slug';
   current?: string;
   source?: string;
+};
+
+export type AuthorReference = {
+  _ref: string;
+  _type: 'reference';
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: 'author';
 };
 
 export type Startup = {
@@ -44,12 +56,7 @@ export type Startup = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  author?: {
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: 'author';
-  };
+  author?: AuthorReference;
   views?: number;
   image?: string;
   category?: string;
@@ -66,13 +73,11 @@ export type Author = {
   _updatedAt: string;
   _rev: string;
   id?: number;
-  startup_refs?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: 'startup';
-  }>;
+  startup_refs?: Array<
+    {
+      _key: string;
+    } & StartupReference
+  >;
   name?: string;
   username?: string;
   email?: string;
@@ -193,8 +198,10 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | StartupReference
   | Playlist
   | Slug
+  | AuthorReference
   | Startup
   | Markdown
   | Author
@@ -208,11 +215,13 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint;
+
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: sanity/lib/queries.ts
 // Variable: STARTUPS_QUERY
 // Query: *[_type=="startup" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search ] | order(_createdAt desc) {  _id, title, slug,  _createdAt,views,  category, image,  author -> {    _id, name, image  },}
-export type STARTUPS_QUERYResult = Array<
+export type STARTUPS_QUERY_RESULT = Array<
   | {
       _id: string;
       title: string | null;
@@ -258,9 +267,11 @@ export type STARTUPS_QUERYResult = Array<
       } | null;
     }
 >;
+
+// Source: sanity/lib/queries.ts
 // Variable: STARTUPS_BY_AUTHOR_ID_QUERY
 // Query: *[_type=="startup" && author._ref == $id ] | order(_createdAt desc) {  _id, title, slug,  _createdAt,views,  category, image,  author -> {    _id, name, image  },}
-export type STARTUPS_BY_AUTHOR_ID_QUERYResult = Array<{
+export type STARTUPS_BY_AUTHOR_ID_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
   slug: Slug | null;
@@ -274,9 +285,11 @@ export type STARTUPS_BY_AUTHOR_ID_QUERYResult = Array<{
     image: string | null;
   } | null;
 }>;
+
+// Source: sanity/lib/queries.ts
 // Variable: STARTUP_DETAIL_QUERY
 // Query: *[_type == 'startup' && _id == $id][0] {    _id, title, slug,    _createdAt, views, pitch,    category, image, description,    author -> {      _id, name, image, username    },  }
-export type STARTUP_DETAIL_QUERYResult = {
+export type STARTUP_DETAIL_QUERY_RESULT = {
   _id: string;
   title: string | null;
   slug: Slug | null;
@@ -293,12 +306,16 @@ export type STARTUP_DETAIL_QUERYResult = {
     username: string | null;
   } | null;
 } | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: STARTUP_VIEWS_QUERY
 // Query: *[_type == 'startup' && _id == $id][0].views
-export type STARTUP_VIEWS_QUERYResult = number | null;
+export type STARTUP_VIEWS_QUERY_RESULT = number | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: AUTHOR_BY_GITHUB_ID_QUERY
 // Query: *[_type == 'author' && id == $id][0] {    _id,    name,    username,    email,    image,    bio}
-export type AUTHOR_BY_GITHUB_ID_QUERYResult = {
+export type AUTHOR_BY_GITHUB_ID_QUERY_RESULT = {
   _id: string;
   name: string | null;
   username: string | null;
@@ -306,9 +323,11 @@ export type AUTHOR_BY_GITHUB_ID_QUERYResult = {
   image: string | null;
   bio: string | null;
 } | null;
+
+// Source: sanity/lib/queries.ts
 // Variable: AUTHOR_BY_ID_QUERY
 // Query: *[_type == 'author' && _id == $id][0] {    _id,    name,    username,    image,    bio,    startup_refs[] {      "id": _ref    }}
-export type AUTHOR_BY_ID_QUERYResult = {
+export type AUTHOR_BY_ID_QUERY_RESULT = {
   _id: string;
   name: string | null;
   username: string | null;
@@ -318,9 +337,18 @@ export type AUTHOR_BY_ID_QUERYResult = {
     id: string;
   }> | null;
 } | null;
-// Variable: PLAYLIST_BY_SLUG_QUERY
+
+// Source: sanity/lib/queries.ts
+// Variable: AUTHOR_IDS_BY_STARTUP_COUNT_DESC_QUERY
+// Query: *[_type == 'author']| order(count(startup_refs) desc)[0...10] {  "id": _id}
+export type AUTHOR_IDS_BY_STARTUP_COUNT_DESC_QUERY_RESULT = Array<{
+  id: string;
+}>;
+
+// Source: sanity/lib/queries.ts
+// Variable: STARTUPS_BY_SLUG_QUERY
 // Query: *[_type == "playlist" && slug.current == $slug][0]{  _id,  title,  slug,  select[]->{    _id,    _createdAt,    title,    slug,    author->{      _id,      name,      slug,      image,      bio    },    views,    description,    category,    image,    pitch  }}
-export type PLAYLIST_BY_SLUG_QUERYResult = {
+export type STARTUPS_BY_SLUG_QUERY_RESULT = {
   _id: string;
   title: string | null;
   slug: Slug | null;
@@ -348,12 +376,13 @@ export type PLAYLIST_BY_SLUG_QUERYResult = {
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type=="startup" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search ] | order(_createdAt desc) {\n  _id, title, slug,\n  _createdAt,views,\n  category, image,\n  author -> {\n    _id, name, image\n  },\n}': STARTUPS_QUERYResult;
-    '*[_type=="startup" && author._ref == $id ] | order(_createdAt desc) {\n  _id, title, slug,\n  _createdAt,views,\n  category, image,\n  author -> {\n    _id, name, image\n  },\n}': STARTUPS_BY_AUTHOR_ID_QUERYResult;
-    "*[_type == 'startup' && _id == $id][0] {\n    _id, title, slug,\n    _createdAt, views, pitch,\n    category, image, description,\n    author -> {\n      _id, name, image, username\n    },\n  }": STARTUP_DETAIL_QUERYResult;
-    "*[_type == 'startup' && _id == $id][0].views": STARTUP_VIEWS_QUERYResult;
-    "\n*[_type == 'author' && id == $id][0] {\n    _id,\n    name,\n    username,\n    email,\n    image,\n    bio\n}\n": AUTHOR_BY_GITHUB_ID_QUERYResult;
-    '\n*[_type == \'author\' && _id == $id][0] {\n    _id,\n    name,\n    username,\n    image,\n    bio,\n    startup_refs[] {\n      "id": _ref\n    }\n}\n': AUTHOR_BY_ID_QUERYResult;
-    '*[_type == "playlist" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  select[]->{\n    _id,\n    _createdAt,\n    title,\n    slug,\n    author->{\n      _id,\n      name,\n      slug,\n      image,\n      bio\n    },\n    views,\n    description,\n    category,\n    image,\n    pitch\n  }\n}': PLAYLIST_BY_SLUG_QUERYResult;
+    '*[_type=="startup" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search ] | order(_createdAt desc) {\n  _id, title, slug,\n  _createdAt,views,\n  category, image,\n  author -> {\n    _id, name, image\n  },\n}': STARTUPS_QUERY_RESULT;
+    '*[_type=="startup" && author._ref == $id ] | order(_createdAt desc) {\n  _id, title, slug,\n  _createdAt,views,\n  category, image,\n  author -> {\n    _id, name, image\n  },\n}': STARTUPS_BY_AUTHOR_ID_QUERY_RESULT;
+    "*[_type == 'startup' && _id == $id][0] {\n    _id, title, slug,\n    _createdAt, views, pitch,\n    category, image, description,\n    author -> {\n      _id, name, image, username\n    },\n  }": STARTUP_DETAIL_QUERY_RESULT;
+    "*[_type == 'startup' && _id == $id][0].views": STARTUP_VIEWS_QUERY_RESULT;
+    "\n*[_type == 'author' && id == $id][0] {\n    _id,\n    name,\n    username,\n    email,\n    image,\n    bio\n}\n": AUTHOR_BY_GITHUB_ID_QUERY_RESULT;
+    '\n*[_type == \'author\' && _id == $id][0] {\n    _id,\n    name,\n    username,\n    image,\n    bio,\n    startup_refs[] {\n      "id": _ref\n    }\n}\n': AUTHOR_BY_ID_QUERY_RESULT;
+    '\n*[_type == \'author\']\n| order(count(startup_refs) desc)[0...10] {\n  "id": _id\n}\n': AUTHOR_IDS_BY_STARTUP_COUNT_DESC_QUERY_RESULT;
+    '*[_type == "playlist" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  select[]->{\n    _id,\n    _createdAt,\n    title,\n    slug,\n    author->{\n      _id,\n      name,\n      slug,\n      image,\n      bio\n    },\n    views,\n    description,\n    category,\n    image,\n    pitch\n  }\n}': STARTUPS_BY_SLUG_QUERY_RESULT;
   }
 }
