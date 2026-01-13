@@ -57,6 +57,12 @@ export const AUTHOR_BY_ID_QUERY = defineQuery(`
     }
 }
 `);
+export const AUTHOR_IDS_BY_STARTUP_COUNT_DESC_QUERY = defineQuery(`
+*[_type == 'author']
+| order(count(startup_refs) desc)[0...10] {
+  "id": _id
+}
+`);
 
 export const STARTUPS_BY_SLUG_QUERY =
   defineQuery(`*[_type == "playlist" && slug.current == $slug][0]{

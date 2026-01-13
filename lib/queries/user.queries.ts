@@ -1,6 +1,6 @@
 import { cacheLife, cacheTag } from 'next/cache';
 import { clientFetch } from '@/sanity/lib/client';
-import { AUTHOR_BY_ID_QUERY } from '@/sanity/lib/queries';
+import { AUTHOR_BY_ID_QUERY, AUTHOR_IDS_BY_STARTUP_COUNT_DESC_QUERY } from '@/sanity/lib/queries';
 
 export interface UserProfile {
   _id: string;
@@ -22,4 +22,10 @@ export async function getUserDetailsById(id: string) {
     tags: [tag],
   });
   return user as UserProfile | null;
+}
+
+export async function getAuthorIdsByStartupCountDesc() {
+  return await clientFetch({
+    query: AUTHOR_IDS_BY_STARTUP_COUNT_DESC_QUERY,
+  });
 }
