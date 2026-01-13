@@ -7,7 +7,7 @@ import { Search, X } from 'lucide-react';
 import { SearchParamsType } from '@/app/(root)/page';
 
 const SearchForm = ({ searchParams }: { searchParams: SearchParamsType }) => {
-  const query = use(searchParams)?.query ?? '';
+  const { query = '' } = use(searchParams);
   const [searchValue, setSearchValue] = useState(query);
   const router = useRouter();
 
