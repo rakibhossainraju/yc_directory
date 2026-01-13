@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import markdownIt from 'markdown-it';
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import formateDate from '@/lib/utils';
 import { Link } from '@router/customized';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -16,7 +16,7 @@ export const StartupDetails = async ({ params }: { params: StartupParamType }) =
   const startup = await getStartupDetailsById(id);
 
   if (!startup) {
-    redirect('/404');
+    return notFound();
   }
 
   const parsedContent = md.render(startup.pitch ?? '');
